@@ -4,7 +4,7 @@ const { Router } = require('express')
 //const typeRouter = require('./typeRouter.js')
 
 const router = Router()
-//router.use('/pokemons', pokemonRouter)
+
 //router.use('/types', typeRouter)
 
 // Configurar los routers
