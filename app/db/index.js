@@ -35,6 +35,8 @@ modeluser(sequelize,DataTypes)
 const { user, pedido , producto } = sequelize.models
 
 user.hasMany(pedido)
+pedido.belongsToMany(producto, {through: 'Detail_order', foreignKey: 'idOrder'})
+producto.belongsToMany(pedido, {through: 'Detail_order', foreignKey: 'idProduct'})
 
 
 module.exports = sequelize
