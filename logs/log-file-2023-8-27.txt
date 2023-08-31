@@ -1,0 +1,95 @@
+[27/8/2023, 18:33:41] [404 - Not Found] /user/login POST 101,844ms 
+[27/8/2023, 18:33:49] [403 - Forbidden] /user/register POST 25,614ms 
+[27/8/2023, 18:34:22] [404 - Not Found] /user/login POST 66,222ms 
+[27/8/2023, 18:34:30] [200 - OK] /user/login POST 4,446ms 
+[27/8/2023, 18:35:48] [200 - OK] /articles GET 79,553ms 
+[27/8/2023, 18:36:02] [200 - OK] /articles GET 59,197ms 
+[27/8/2023, 18:37:13] [403 - Forbidden] /user/article/:pedro POST 1,238ms 
+[27/8/2023, 18:49:55] [403 - Forbidden] /user/verify GET 1,716ms 
+[27/8/2023, 18:50:14] [403 - Forbidden] /user/register POST 62,369ms 
+[27/8/2023, 18:50:51] [200 - OK] /user/login POST 58,465ms 
+[27/8/2023, 18:51:12] [403 - Forbidden] /user/verify GET 0,812ms 
+[27/8/2023, 18:51:41] [200 - OK] /user/login POST 66,041ms 
+[27/8/2023, 18:51:58] [403 - Forbidden] /user/verify GET 0,917ms 
+[27/8/2023, 18:53:42] [200 - OK] /users GET 54,502ms 
+[27/8/2023, 18:54:18] [404 - Not Found] /article GET 1,7ms 
+[27/8/2023, 18:54:31] [200 - OK] /articles GET 56,293ms 
+[27/8/2023, 18:54:49] [404 - Not Found] /articles/pedro GET 70,584ms 
+[27/8/2023, 18:55:02] [200 - OK] /articles/ GET 58,935ms 
+[27/8/2023, 18:55:07] [404 - Not Found] /articles/1 GET 2,882ms 
+[27/8/2023, 18:55:10] [200 - OK] /articles/ GET 2,403ms 
+[27/8/2023, 18:55:27] [200 - OK] /article/2 GET 57,888ms 
+[27/8/2023, 19:01:16] [403 - Forbidden] /user/verify GET 1,072ms 
+[27/8/2023, 19:01:26] [403 - Forbidden] /user/verify GET 0,465ms 
+[27/8/2023, 19:01:36] [404 - Not Found] /user/login GET 0,483ms 
+[27/8/2023, 19:01:51] [404 - Not Found] /user/login GET 0,981ms 
+[27/8/2023, 19:02:04] [404 - Not Found] /user/login GET 0,634ms 
+[27/8/2023, 19:02:32] [404 - Not Found] /user/login GET 0,527ms 
+[27/8/2023, 19:03:39] [200 - OK] /users GET 58,107ms 
+[27/8/2023, 19:03:52] [404 - Not Found] /user/login GET 0,574ms 
+[27/8/2023, 19:04:14] [404 - Not Found] /user/login GET 0,963ms 
+[27/8/2023, 19:04:26] [404 - Not Found] /users POST 0,675ms 
+[27/8/2023, 19:05:41] [404 - Not Found] /users POST 0,38ms 
+[27/8/2023, 19:05:47] [404 - Not Found] /user POST 0,274ms 
+[27/8/2023, 19:05:50] [404 - Not Found] /users POST 0,554ms 
+[27/8/2023, 19:06:20] [404 - Not Found] /users POST 3,975ms 
+[27/8/2023, 19:06:38] [404 - Not Found] /user/login GET 1,772ms 
+[27/8/2023, 19:06:52] [200 - OK] / GET 2,389ms 
+[27/8/2023, 19:07:15] [200 - OK] /users GET 76,188ms 
+[27/8/2023, 19:07:45] [404 - Not Found] /user/login GET 0,769ms 
+[27/8/2023, 19:08:10] [404 - Not Found] /user/login GET 6,107ms 
+[27/8/2023, 19:08:18] [404 - Not Found] /user/login GET 1,451ms 
+[27/8/2023, 19:08:19] [404 - Not Found] /user/login GET 0,82ms 
+[27/8/2023, 19:08:20] [404 - Not Found] /user/login GET 0,661ms 
+[27/8/2023, 19:08:20] [404 - Not Found] /user/login GET 0,468ms 
+[27/8/2023, 19:08:27] [501 - Not Implemented] /user/login POST 5,071ms 
+[27/8/2023, 19:08:50] [501 - Not Implemented] /user/login POST 1,261ms 
+[27/8/2023, 19:08:51] [501 - Not Implemented] /user/login POST 0,951ms 
+[27/8/2023, 19:09:10] [501 - Not Implemented] /user/login POST 1,487ms 
+[27/8/2023, 19:09:18] [501 - Not Implemented] /user/login POST 4,66ms 
+[27/8/2023, 19:10:06] [501 - Not Implemented] /user/login POST 1,743ms 
+[27/8/2023, 19:10:28] [200 - OK] /user/login POST 87,652ms 
+[27/8/2023, 19:10:52] [403 - Forbidden] /user/verify GET 0,943ms 
+[27/8/2023, 19:11:23] [403 - Forbidden] /user/verify GET 1,669ms 
+[27/8/2023, 19:12:02] [403 - Forbidden] /user/verify GET 9,782ms 
+[27/8/2023, 19:12:20] [403 - Forbidden] /user/verify GET 2,111ms 
+[27/8/2023, 19:12:38] [403 - Forbidden] /user/verify GET 7,228ms 
+[27/8/2023, 19:19:43] [403 - Forbidden] /user/verify GET 6,177ms 
+[27/8/2023, 19:19:47] [403 - Forbidden] /user/verify GET 1,927ms 
+[27/8/2023, 19:20:02] [403 - Forbidden] /user/verify GET 1,077ms 
+[27/8/2023, 19:20:17] [403 - Forbidden] /user/verify GET 0,955ms 
+[27/8/2023, 19:30:25] [200 - OK] /user/login POST 91,5ms 
+[27/8/2023, 19:32:47] [200 - OK] /user/login POST 63,557ms 
+[27/8/2023, 19:41:17] [200 - OK] /user/login POST 14,448ms 
+[27/8/2023, 19:41:25] [403 - Forbidden] /user/verify GET 4,547ms 
+[27/8/2023, 19:41:32] [403 - Forbidden] /user/verify GET 1,333ms 
+[27/8/2023, 19:41:33] [403 - Forbidden] /user/verify GET 1,042ms 
+[27/8/2023, 19:55:18] [403 - Forbidden] /user/verify GET 8,951ms 
+[27/8/2023, 20:09:45] [200 - OK] /user/login POST 13,176ms 
+[27/8/2023, 20:10:02] [403 - Forbidden] /user/verify GET 3,947ms 
+[27/8/2023, 20:10:28] [200 - OK] /user/verify GET 4,076ms 
+[27/8/2023, 20:16:16] [403 - Forbidden] /user/verify GET 2,485ms 
+[27/8/2023, 20:16:25] [403 - Forbidden] /user/verify GET 1,784ms 
+[27/8/2023, 20:16:30] [200 - OK] /user/verify GET 1,564ms 
+[27/8/2023, 20:16:33] [403 - Forbidden] /user/verify GET 1,568ms 
+[27/8/2023, 20:16:38] [403 - Forbidden] /user/verify GET 1,62ms 
+[27/8/2023, 20:16:42] [403 - Forbidden] /user/verify GET 1,568ms 
+[27/8/2023, 20:16:47] [200 - OK] /user/verify GET 2,114ms 
+[27/8/2023, 20:19:22] [501 - Not Implemented] /article/Pedro GET 76,782ms 
+[27/8/2023, 20:20:05] [501 - Not Implemented] /article/Pedro GET 66,496ms 
+[27/8/2023, 20:21:49] [501 - Not Implemented] /article/Pedro GET 68,046ms 
+[27/8/2023, 20:23:24] [501 - Not Implemented] /article/Pedro GET 64,18ms 
+[27/8/2023, 20:23:34] [501 - Not Implemented] /article/Pedro GET 2,871ms 
+[27/8/2023, 20:23:41] [501 - Not Implemented] /article/Pedro GET 1,613ms 
+[27/8/2023, 20:24:01] [404 - Not Found] /article/Pedro POST 1,494ms 
+[27/8/2023, 20:25:05] [404 - Not Found] /user/article/Pedro POST 121,81ms 
+[27/8/2023, 20:26:32] [200 - OK] /users GET 65,425ms 
+[27/8/2023, 20:26:55] [404 - Not Found] /articles/Pedro GET 69,827ms 
+[27/8/2023, 20:27:08] [404 - Not Found] /articles/Pedro GET 75,589ms 
+[27/8/2023, 20:27:16] [404 - Not Found] /articles/Pedro GET 2,136ms 
+[27/8/2023, 20:27:35] [404 - Not Found] /user/article/Pedro POST 125,702ms 
+[27/8/2023, 20:27:52] [404 - Not Found] /user/article/Pedro POST 125,016ms 
+[27/8/2023, 20:28:30] [404 - Not Found] /user/article/Pedro POST 112,769ms 
+[27/8/2023, 20:30:51] [404 - Not Found] /articles/Pedro GET 54,435ms 
+[27/8/2023, 20:30:53] [404 - Not Found] /articles/Pedro GET 2,065ms 
+[27/8/2023, 20:31:12] [404 - Not Found] /articles/Pedro GET 54,334ms 
