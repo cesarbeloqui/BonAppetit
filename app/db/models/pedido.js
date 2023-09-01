@@ -1,31 +1,34 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes, Sequelize } = require('sequelize');
 
 module.exports = (sequelize) => {
  
-  sequelize.define('pedido', {
-    id: {
+  sequelize.define('order', {
+    id_Order: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       unique: true,
     },
-   Id_Cliente: {
+   id_Client: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
-
-    estado: {
-      type: DataTypes.ENUM('a_pagar','en_preparacion','para_entregar','entregado','cancelado'),
-         
+    status: {
+      type: DataTypes.ENUM('a_pagar','en_preparacion','para_entregar','entregado','cancelado'), 
+      allowNull: false, 
     },
-    importe_total: {
+    total: {
       type: DataTypes.FLOAT,
-     
+      allowNull: false,
     },
-    estado_pago: {
+    payment_status: {
       type: DataTypes.BOOLEAN,
-      
+      allowNull: false,
+    },
+    order_date:{
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: Sequelize.NOW
     }
-    
-  })
-} 
+  });
+};
