@@ -4,6 +4,7 @@ require('dotenv').config({ path: `${process.cwd()}/.env` })
 const modelpedido = require ('./models/pedido.js')
 const modelproducto = require ('./models/producto.js')
 const modeluser = require ('./models/user.js')
+const modelTipoProducto = require ('./models/tipoProducto.js')
 
 const { Sequelize, DataTypes } = require('sequelize')
 
@@ -29,14 +30,18 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 modelpedido(sequelize,DataTypes)
 modelproducto(sequelize,DataTypes)
 modeluser(sequelize,DataTypes)
+modelTipoProducto(sequelize,DataTypes)
 
-
+console.log(sequelize.models)
 // Define associate
-const { user, pedido , producto } = sequelize.models
+const { user, pedido , producto , tipoProducto } = sequelize.models
 
 user.hasMany(pedido)
 pedido.belongsToMany(producto, {through: 'Detail_order', foreignKey: 'idOrder'})
 producto.belongsToMany(pedido, {through: 'Detail_order', foreignKey: 'idProduct'})
+
+producto.belongsToMany(tipoProducto, { through: 'Tipos_producto'})
+tipoProducto.belongsToMany(producto, { through: 'Tipos_producto'})
 
 
 module.exports = sequelize
