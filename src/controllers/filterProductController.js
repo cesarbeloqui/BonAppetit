@@ -19,14 +19,14 @@ const filterProductByClass = async (className) => {
   return filtered;
 };
 
-//Filtro de stock(true si esta en stock, false si no lo esta)
-const filterByStock = async (boolean) => {
+//Filtro de stock de productos(true si esta en stock, false si no lo esta)
+const filterProductByStock = async (boolean) => {
   const filtered = await Product.findAll({ where: { stock: boolean } });
   return filtered;
 };
 
-//Filtro por habilitados(true si esta habilitado, false si no lo esta)
-const filterByEnabled = async (boolean) => {
+//Filtro por productos habilitados(true si esta habilitado, false si no lo esta)
+const filterProductByEnabled = async (boolean) => {
   const filtered = await Product.findAll({ where: { enable: boolean } });
   return filtered;
 };
@@ -34,6 +34,6 @@ const filterByEnabled = async (boolean) => {
 module.exports = {
   filterProductByName,
   filterProductByClass,
-  filterByStock,
-  filterByEnabled,
+  filterProductByStock,
+  filterProductByEnabled,
 };
