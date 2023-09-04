@@ -16,7 +16,7 @@ module.exports = (sequelize) => {
       },
 
       price: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10 ,2 ), //almacena precio con 8 digitos y 2 decimales
         allowNull: false,
       },
 
@@ -33,6 +33,13 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         dafaultValue: true,
       },
+      description: {
+        type: DataTypes.TEXT,
+      },
+      deleted: {
+          type: DataTypes.BOOLEAN,
+          defaultValue: false
+      }
     },
     { timestamps: false }
   );
