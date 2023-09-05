@@ -11,24 +11,23 @@ module.exports = (sequelize) => {
         unique: true,
       },
       name: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
       },
-
       price: {
         type: DataTypes.DECIMAL(10 ,2 ), //almacena precio con 8 digitos y 2 decimales
         allowNull: false,
       },
-
-      imagen: {
+      image: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       stock: {
-        type: DataTypes.BOOLEAN,
+        type: DataTypes.INTEGER,
       },
-
+      qualification: {
+        type: DataTypes.ENUM("1","2","3","4","5")      
+      },
       enable: {
         type: DataTypes.BOOLEAN,
         dafaultValue: true,
