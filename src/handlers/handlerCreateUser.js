@@ -1,8 +1,5 @@
-const accountTransport = require("../account_transport.json");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
-const { google } = require("googleapis");
-const OAuth2 = google.auth.OAuth2;
+const { mail_rover, accountTransport } = require("../config/mailer");
 
 /* 
 Esta es la posible respuesta de Firebase para un usuario nuevo
@@ -33,24 +30,6 @@ Esta es la posible respuesta de Firebase para un usuario nuevo
 const handlerCreateUser = async (req) => {
   const { email, password, displayName } = req.body;
 
-  const mail_rover = async (callback) => {
-    const oauth2Client = new OAuth2(
-      accountTransport.auth.clientId,
-      accountTransport.auth.clientSecret,
-      "https://developers.google.com/oauthplayground"
-    );
-    oauth2Client.setCredentials({
-      refresh_token: accountTransport.auth.refreshToken,
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
-    oauth2Client.getAccessToken((err, token) => {
-      if (err) return console.log(err);
-      accountTransport.auth.accessToken = token;
-      callback(nodemailer.createTransport(accountTransport));
-    });
-  };
   // Verifica que la contraseña cumpla con los requisitos mínimos
   if (password.length < 6) {
     throw new Error("La contraseña debe tener al menos 6 caracteres.");
@@ -71,8 +50,8 @@ const handlerCreateUser = async (req) => {
       const mailOptions = {
         from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
         to: `${email}`, // Cambia esto al destinatario deseado
-        subject: "Asunto del correo",
-        text: "Cuerpo del correo electrónico",
+        subject: "Confirmación del correo electrónico",
+        text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
       };
 
       try {
