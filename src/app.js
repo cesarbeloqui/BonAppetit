@@ -3,8 +3,9 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-const serviceAccountFirebase = require("../serviceAccountKeyFirebase.json");
+const serviceAccountFirebase = require("../serviceAccountKeyFirebase.js");
 const admin = require("firebase-admin");
+
 
 require("./db.js");
 
