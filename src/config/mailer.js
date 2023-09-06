@@ -1,22 +1,25 @@
+const accountTransport = require("./account_transport.js");
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
 const nodemailer = require("nodemailer");
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-    user: "noreply.bonapptit@gmail.com",
-    pass: "dzmxhckzuzaconwf",
-  },
-});
-
-transporter.verify(function (error, success) {
-    if (error) {
-      console.log(error);
-    } else {
-      console.log("Server is ready to take our messages");
-    }
+const mail_rover = async (callback) => {
+  const oauth2Client = new OAuth2(
+    accountTransport.auth.clientId,
+    accountTransport.auth.clientSecret,
+    "https://developers.google.com/oauthplayground"
+  );
+  oauth2Client.setCredentials({
+    refresh_token: accountTransport.auth.refreshToken,
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
+  oauth2Client.getAccessToken((err, token) => {
+    if (err) return console.log(err);
+    accountTransport.auth.accessToken = token;
+    callback(nodemailer.createTransport(accountTransport));
+  });
+};
 
-module.exports = transporter;
+module.exports = {mail_rover, accountTransport};
