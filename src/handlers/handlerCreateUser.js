@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const { mail_rover, accountTransport } = require("../config/mailer");
 
+
 /* 
 Esta es la posible respuesta de Firebase para un usuario nuevo
 {
@@ -68,4 +69,26 @@ const handlerCreateUser = async (req) => {
   }
 };
 
-module.exports = handlerCreateUser;
+const handlerDeleteUser = async (email) => {
+  try {
+    // Encuentra al usuario por su correo electrónico
+    const user = await admin.auth().getUserByEmail(email);
+
+    if (!user) {
+      throw new Error("No se encontró al usuario");
+    }
+
+    // Elimina al usuario
+    await admin.auth().deleteUser(user.uid);
+
+    return "Usuario eliminado con éxito";
+  } catch (error) {
+    throw new Error(`Error al eliminar usuario: ${error.message}`);
+  }
+};
+
+module.exports = {
+  handlerCreateUser,
+  handlerDeleteUser
+};
+
