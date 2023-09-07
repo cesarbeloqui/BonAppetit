@@ -14,6 +14,16 @@ module.exports = (sequelize) => {
         unique: true,
         allowNull: false,
       },
+      image: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      enable: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+        
+      },
     },
     { timestamps: false }
   );

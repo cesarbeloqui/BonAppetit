@@ -24,13 +24,16 @@ module.exports = (sequelize) => {
       },
       stock: {
         type: DataTypes.INTEGER,
+        defaultValue: 0,
+        allowNull: false
       },
       qualification: {
         type: DataTypes.ENUM("1","2","3","4","5")      
       },
       enable: {
         type: DataTypes.BOOLEAN,
-        dafaultValue: true,
+        defaultValue: true,
+        allowNull: false
       },
       description: {
         type: DataTypes.TEXT,
