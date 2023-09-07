@@ -17,7 +17,7 @@ router.use("/productClass", productClassRouter);
 router.use("/product", productRouter);
 router.use("/auth", authRouter)
 
-router.use(( res, ) => {  // caso en que se ponga una url distinta a la solicitada (residual)
+router.use(( req,res ) => {  // caso en que se ponga una url distinta a la solicitada (residual)
     res.status(404).send('dirección no encontrada');
 });
 
