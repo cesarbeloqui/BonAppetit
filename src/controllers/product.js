@@ -46,9 +46,8 @@ const destroyProduct = async (id) => {
 
 const recoverProduct = async (id) => {
     const product  = await Product.findByPk(id)
-
-    console.log(product.id)
     if(!product.id) { return 'id de producto incorrecto'}
+    console.log(product.deleted)
     if(product.deleted===false) { return 'este producto no esta borrado'}
     Product.update( { deleted : false} , { where : { id : id}}) 
     return ('producto recuperado')

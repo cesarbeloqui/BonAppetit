@@ -46,7 +46,7 @@ const putProduct = async (req,res) => {
         const {id} = req.params
         const {deleted} = req.query
         const product = req.body
-       
+      
         if (deleted === 'false') {
             const recover = await recoverProduct(id,deleted);
             res.send(recover);
@@ -55,7 +55,6 @@ const putProduct = async (req,res) => {
             res.send(update);
           }
     } catch (error) {res.status(400).json({error: error.message})}
-      
 }
 
 module.exports = {
