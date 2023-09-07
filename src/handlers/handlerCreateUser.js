@@ -1,6 +1,7 @@
 const admin = require("firebase-admin");
 const { mail_rover, accountTransport } = require("../config/mailer");
-
+const URL_FRONT = process.env.URL_FRONT;
+const { User } = require("../db");
 
 /* 
 Esta es la posible respuesta de Firebase para un usuario nuevo
@@ -43,27 +44,42 @@ const handlerCreateUser = async (req) => {
       password,
       displayName,
     });
-    // Envía el correo de verificación después de crear el usuario
-    const link = await admin
-      .auth()
-      .generateEmailVerificationLink(userRecord.email);
-    mail_rover(async (transporter) => {
-      const mailOptions = {
-        from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
-        to: `${email}`, // Cambia esto al destinatario deseado
-        subject: "Confirmación del correo electrónico",
-        text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
-      };
-
-      try {
-        const info = await transporter.sendMail(mailOptions);
-        console.log("Correo enviado:", info.response);
-      } catch (err) {
-        console.error("Error al enviar el correo:", err);
-      }
+    // Genera el token de inicio de sesión
+    const userToken = await admin.auth().createCustomToken(userRecord.uid);
+    const createUserInDB = await User.create({
+      id: userRecord.uid,
+      userName: userRecord.displayName,
+      email: userRecord.email,
     });
+    // Envía el correo de verificación después de crear el usuario
+    if (createUserInDB) {
+      const actionCodeSettings = {
+        url: `${URL_FRONT}`,
+        handleCodeInApp: true,
+      };
+      const link = await admin
+        .auth()
+        .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
+      mail_rover(async (transporter) => {
+        const mailOptions = {
+          from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
+          to: `${email}`, // Cambia esto al destinatario deseado
+          subject: "Confirmación del correo electrónico",
+          text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
+        };
 
-    return { userRecord, link };
+        try {
+          const info = await transporter.sendMail(mailOptions);
+          console.log("Correo enviado:", info.response);
+        } catch (err) {
+          console.error("Error al enviar el correo:", err);
+        }
+      });
+
+      return { userRecord, link, userToken };
+    } else {
+      throw new Error("Error al registrar el usuario");
+    }
   } catch (error) {
     throw new Error(error.message);
   }
@@ -89,6 +105,5 @@ const handlerDeleteUser = async (email) => {
 
 module.exports = {
   handlerCreateUser,
-  handlerDeleteUser
+  handlerDeleteUser,
 };
-

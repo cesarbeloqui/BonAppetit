@@ -1,17 +1,19 @@
-const { handlerCreateUser, handlerDeleteUser } = require("../handlers/handlerCreateUser");
-
+const {
+  handlerCreateUser,
+  handlerDeleteUser,
+} = require("../handlers/handlerCreateUser");
 
 const createUser = async (req, res) => {
   try {
-    const { userRecord, link } = await handlerCreateUser(req);
+    const { userRecord, link, userToken } = await handlerCreateUser(req);
     // Aquí puedes usar un servicio de envío de correo electrónico (como SendGrid o Nodemailer)
     // para enviar el enlace de verificación al correo del usuario
-    console.log("Enlace de verificación:", link);
     // En este ejemplo, simplemente se muestra el enlace en la consola
     // Debes enviarlo por correo electrónico al usuario
     res.status(200).json({
       user: userRecord,
       message: "Usuario creado y correo de verificación enviado.",
+      userToken,
     });
   } catch (error) {
     // Verifica si el error es debido a un correo electrónico duplicado
@@ -34,15 +36,14 @@ const createUser = async (req, res) => {
   }
 };
 
-
-
-
 const deleteUser = async (req, res) => {
   try {
     const { email } = req.body;
 
     if (!email) {
-      return res.status(400).json({ error: "El correo electrónico es requerido" });
+      return res
+        .status(400)
+        .json({ error: "El correo electrónico es requerido" });
     }
 
     const result = await handlerDeleteUser(email);
@@ -52,12 +53,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-
-
-
-
-
 module.exports = {
   createUser,
-  deleteUser
+  deleteUser,
 };
