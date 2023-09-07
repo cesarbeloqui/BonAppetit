@@ -6,7 +6,6 @@ const routes = require("./routes/index.js");
 const serviceAccountFirebase = require("../serviceAccountKeyFirebase.js");
 const admin = require("firebase-admin");
 
-
 require("./db.js");
 
 const server = express();
