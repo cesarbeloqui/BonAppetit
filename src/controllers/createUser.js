@@ -53,11 +53,25 @@ const deleteUser = async (req, res) => {
 };
 
 
+// const putUserByEmail = async (email, updatedUserData) => {
+//   try {
+//     // Busca al usuario por su correo electrónico.
+//     const user = await admin.auth().getUserByEmail(email);
+
+//     // Realiza la actualización del usuario en Firebase.
+//     const userToUpdate = await admin.auth().updateUser(user.uid, updatedUserData);
+
+//     // Devuelve el usuario actualizado.
+//     return userToUpdate;
+//   } catch (error) {
+//     throw new Error(`Error al actualizar usuario: ${error.message}`);
+//   }
+// };
 
 
 
 
 module.exports = {
   createUser,
-  deleteUser
+  deleteUser, 
 };

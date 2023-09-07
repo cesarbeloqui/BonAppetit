@@ -87,8 +87,23 @@ const handlerDeleteUser = async (email) => {
   }
 };
 
+const updateUserPassword = async (req, res) => {
+  const { newPassword } = req.body;
+
+  // Verifica que el usuario esté autenticado
+  const user = req.user; // Firebase puede autenticar al usuario?
+  try {
+    // Actualiza la contraseña del usuario autenticado
+    await admin.auth().updateUser(user.uid, { password: newPassword });
+    res.status(200).json({ message: "Contraseña actualizada con éxito" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   handlerCreateUser,
-  handlerDeleteUser
+  handlerDeleteUser,
+  updateUserPassword
 };
 
