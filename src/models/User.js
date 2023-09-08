@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
         primaryKey: true, // Establecer como clave primaria
         autoIncrement: false, // Deshabilitar el autoincremento
       },
-      userName: {
+      displayName: {
         type: DataTypes.STRING,
         allowNull: true,
       },

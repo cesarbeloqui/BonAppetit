@@ -11,7 +11,7 @@ conn.sync({ force: true }).then(async () => {
         where: { email: user.email },
         defaults: {
           id: user.uid,
-          userName: user.displayName,
+          displayName: user.displayName,
           email: user.email,
         },
       });

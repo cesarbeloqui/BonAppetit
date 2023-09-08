@@ -5,19 +5,28 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   const { uid, email, displayName } = req.body;
-  const user = { id: uid, userName: displayName, email };
+  const user = { id: uid, displayName, email };
 
   try {
-    const createdUser = await User.create(user);
-    res.status(200).send(createdUser);
-  } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      // Si el usuario ya existe, puedes optar por enviar un mensaje personalizado
-      res.status(400).send("El usuario ya existe.");
+    const [createdUser, created] = await User.findOrCreate({
+      where: { email: user.email },
+      defaults: user,
+    });
+
+    if (created) {
+      res.status(200).send(createdUser);
     } else {
-      // Si el error es de otro tipo, devuelve un mensaje de error interno del servidor
-      res.status(500).send("Error interno del servidor.");
+      res.status(200).send({
+        message: "El usuario ya existe.",
+        user: {
+          id: createdUser.id,
+          displayName: createdUser.displayName,
+          email: createdUser.email,
+        },
+      });
     }
+  } catch (error) {
+    res.status(500).send(error);
   }
 });
 
