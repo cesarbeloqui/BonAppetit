@@ -48,7 +48,7 @@ const handlerCreateUser = async (req) => {
     const userToken = await admin.auth().createCustomToken(userRecord.uid);
     const createUserInDB = await User.create({
       id: userRecord.uid,
-      userName: userRecord.displayName,
+      displayName: userRecord.displayName,
       email: userRecord.email,
     });
     // Envía el correo de verificación después de crear el usuario
