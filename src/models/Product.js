@@ -31,6 +31,10 @@ module.exports = (sequelize) => {
       qualification: {
         type: DataTypes.ENUM("1","2","3","4","5")      
       },
+      time: {
+        type: DataTypes.TIME,
+        allowNull: false   
+      },
       enable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
