@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
       },
       time: {
         type: DataTypes.TIME,
-        allowNull: false   
+           
       },
       enable: {
         type: DataTypes.BOOLEAN,
