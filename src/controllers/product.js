@@ -1,3 +1,4 @@
+const { time } = require('console')
 const { Product , ProductClass } = require ('../db')
 
 const findallProduct = async (del) => {
@@ -18,9 +19,9 @@ const findallProduct = async (del) => {
 
 
 
-const createProduct = async ({name,price,image,stock,enable,productClass,description}) => {
+const createProduct = async ({name,price,image,stock,enable,productClass,description,time}) => {
     console.log(name,price,image,productClass)
-    if (!name || !price || !image || productClass )  {  ('faltan datos para crear producto')}
+    if (!name || !price || !image || productClass || time)  {  ('faltan datos para crear producto')}
     if ((await ProductClass.findAll()).length<1) { return ('debe cargar clases de comida antes de agregar productos')} 
     const newProduct = await Product.create({
         name,
@@ -28,6 +29,7 @@ const createProduct = async ({name,price,image,stock,enable,productClass,descrip
         image,
         stock,
         enable,
+        time,
         description
         })
     newProduct.addProductClasses(productClass)
