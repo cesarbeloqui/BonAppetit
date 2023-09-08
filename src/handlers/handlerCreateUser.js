@@ -1,8 +1,6 @@
 const admin = require("firebase-admin");
 const { mail_rover, accountTransport } = require("../config/mailer");
 const URL_FRONT = process.env.URL_FRONT;
-const URL_RESET = process.env.URL_RESET;
-
 
 /* 
 Esta es la posible respuesta de Firebase para un usuario nuevo
