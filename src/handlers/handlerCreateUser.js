@@ -1,5 +1,7 @@
 const admin = require("firebase-admin");
 const { mail_rover, accountTransport } = require("../config/mailer");
+const URL_FRONT = process.env.URL_FRONT;
+const URL_RESET = process.env.URL_RESET;
 
 
 /* 
@@ -87,23 +89,47 @@ const handlerDeleteUser = async (email) => {
   }
 };
 
-const updateUserPassword = async (req, res) => {
-  const { newPassword } = req.body;
+const sendCustomPasswordResetEmail = async (email, link) => {
+  // Configura el correo electrónico
+  mail_rover(async (transporter) => {
+    const mailOptions = {
+      from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
+      to: `${email}`, // Cambia esto al destinatario deseado
+      subject: "Cambio de contraseña",
+      text: `Haz click en el siguiente enlace para cambiar tu contraseña: ${link} \n\n Si no solicitaste el cambio, puedes ignorar este mensaje`,
+    };
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Correo enviado:", info.response);
+    } catch (err) {
+      console.error("Error al enviar el correo:", err);
+    }
+  });
+}
 
-  // Verifica que el usuario esté autenticado
-  const user = req.user; // Firebase puede autenticar al usuario?
+
+const changePasswordUser = async (req) =>{
+  const { email } = req.body;
+  console.log("Valor de email:", email);
   try {
-    // Actualiza la contraseña del usuario autenticado
-    await admin.auth().updateUser(user.uid, { password: newPassword });
-    res.status(200).json({ message: "Contraseña actualizada con éxito" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
+  const userEmail = await admin.auth().getUserByEmail(email);
+  const actionCodeSettings = {
+    url: `${URL_FRONT}`, // URL de tu aplicación para restablecer la contraseña
+    handleCodeInApp: true, //Firebase manejara el restablecimiento de la contraseña
+  };
+  // console.log("valor de userEmail", userEmail);
+  const link = await admin.auth().generatePasswordResetLink(userEmail.email, actionCodeSettings);
+    await sendCustomPasswordResetEmail(userEmail.email, link);
+    return { message: "Correo de restablecimiento de contraseña enviado con éxito" };
+}   catch(error) {
+      throw new Error(`Error al enviar correo de cambio de contraseña: ${error.message}`);
+    }
+}
+
 
 module.exports = {
   handlerCreateUser,
   handlerDeleteUser,
-  updateUserPassword
+  changePasswordUser 
 };
 
