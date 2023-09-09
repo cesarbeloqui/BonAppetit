@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       price: {
-        type: DataTypes.DECIMAL(10 ,2 ), //almacena precio con 8 digitos y 2 decimales
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       image: {
@@ -25,10 +25,10 @@ module.exports = (sequelize) => {
       stock: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
-        allowNull: false
+        allowNull: false,
       },
       qualification: {
-        type: DataTypes.ENUM("1","2","3","4","5")      
+        type: DataTypes.ENUM("1", "2", "3", "4", "5"),
       },
       time: {
         type: DataTypes.TIME,
@@ -37,15 +37,15 @@ module.exports = (sequelize) => {
       enable: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-        allowNull: false
+        allowNull: false,
       },
       description: {
         type: DataTypes.TEXT,
       },
       deleted: {
-          type: DataTypes.BOOLEAN,
-          defaultValue: false
-      }
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
     },
     { timestamps: false }
   );
