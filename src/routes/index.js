@@ -6,7 +6,8 @@ const registerRouter = require("./registerRouter");
 const userRouter = require("./userRouter");
 const productClassRouter = require("./productClassRouter");
 const productRouter = require("./productRouter");
-const authRouter = require ("./authRouter")
+const authRouter = require("./authRouter");
+const orderRouter = require("./orderRouter");
 
 const router = Router();
 
@@ -16,11 +17,13 @@ router.use("/users", userRouter);
 
 router.use("/productClass", productClassRouter);
 router.use("/product", productRouter);
-router.use("/auth", authRouter)
-router.use("/register", registerRouter)
+router.use("/auth", authRouter);
+router.use("/register", registerRouter);
+router.use("/order", orderRouter);
 
-router.use(( req,res ) => {  // caso en que se ponga una url distinta a la solicitada (residual)
-    res.status(404).send('dirección no encontrada');
+router.use((req, res) => {
+  // caso en que se ponga una url distinta a la solicitada (residual)
+  res.status(404).send("dirección no encontrada");
 });
 
 module.exports = router;
