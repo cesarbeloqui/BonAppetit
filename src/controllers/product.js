@@ -1,4 +1,5 @@
-const { Product, ProductClass } = require("../db");
+const { time } = require('console')
+const { Product , ProductClass } = require ('../db')
 
 const findAllProduct = async () => {
   const product = await Product.findAll({
@@ -15,34 +16,24 @@ const findAllProduct = async () => {
   return product;
 };
 
-const createProduct = async ({
-  name,
-  price,
-  image,
-  stock,
-  enable,
-  productClass,
-  description,
-}) => {
-  console.log(name, price, image, productClass);
-  if (!name || !price || !image || productClass) {
-    ("faltan datos para crear producto");
-  }
-  if ((await ProductClass.findAll()).length < 1) {
-    return "debe cargar clases de comida antes de agregar productos";
-  }
-  const newProduct = await Product.create({
-    name,
-    price,
-    image,
-    stock,
-    enable,
-    description,
-  });
-  newProduct.addProductClasses(productClass);
+const createProduct = async ({name,price,image,stock,enable,productClass,description,time}) => {
+    console.log(name,price,image,productClass)
+    if (!name || !price || !image || productClass || time)  {  ('faltan datos para crear producto')}
+    if ((await ProductClass.findAll()).length<1) { return ('debe cargar clases de comida antes de agregar productos')} 
+    const newProduct = await Product.create({
+        name,
+        price,
+        image,
+        stock,
+        enable,
+        time,
+        description
+        })
+    newProduct.addProductClasses(productClass)
+   
+    return newProduct
+}
 
-  return newProduct;
-};
 // ruta para borrar un prod
 const destroyProduct = async (id) => {
   const product = await Product.findByPk(id);
