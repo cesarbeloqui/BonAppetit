@@ -4,6 +4,7 @@ const {
   orderPaid,
   changeStatus,
   removeOrder,
+  findOrderById
 } = require("../controllers/orderController");
 
 //-----------------------------------------------------------------------------------------
@@ -89,10 +90,24 @@ const deleteOrder = async (req, res) => {
 
 //-----------------------------------------------------------------------------------------
 
+const getOrderById = async (req, res) => {
+  const orderId = req.params.id;
+  try {
+    const order = await findOrderById(orderId);
+    if (!order) {
+      return res.status(404).json({ error: "Pedido no encontrado" });
+    }
+    res.status(200).json(order);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 module.exports = {
   postOrder,
   getOrderFilters,
   updateOrderPayment,
   updateStatus,
   deleteOrder,
+  getOrderById
 };

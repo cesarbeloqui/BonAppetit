@@ -1,7 +1,4 @@
-const { time } = require('console')
-const { Product , ProductClass } = require ('../db')
-
-
+const { Product, ProductClass } = require("../db");
 
 const findAllProduct = async () => {
   const product = await Product.findAll({
@@ -18,23 +15,41 @@ const findAllProduct = async () => {
   return product;
 };
 
-const createProduct = async ({name,price,image,stock,enable,productClass,description,time}) => {
-    console.log(name,price,image,productClass)
-    if (!name || !price || !image || productClass || time)  {  ('faltan datos para crear producto')}
-    if ((await ProductClass.findAll()).length<1) { return ('debe cargar clases de comida antes de agregar productos')} 
-    const newProduct = await Product.create({
-        name,
-        price,
-        image,
-        stock,
-        enable,
-        time,
-        description
-        })
-    newProduct.addProductClasses(productClass)
-   
-    return newProduct
-}
+const findProduct = async (id) => {
+  const productDetail = await Product.findByPk(id);
+  return productDetail;
+};
+
+const createProduct = async ({
+  name,
+  price,
+  image,
+  stock,
+  enable,
+  productClass,
+  description,
+  time,
+}) => {
+  console.log(name, price, image, productClass);
+  if (!name || !price || !image || productClass || time) {
+    ("faltan datos para crear producto");
+  }
+  if ((await ProductClass.findAll()).length < 1) {
+    return "debe cargar clases de comida antes de agregar productos";
+  }
+  const newProduct = await Product.create({
+    name,
+    price,
+    image,
+    stock,
+    enable,
+    time,
+    description,
+  });
+  newProduct.addProductClasses(productClass);
+
+  return newProduct;
+};
 
 // ruta para borrar un prod
 const destroyProduct = async (id) => {
@@ -68,22 +83,11 @@ const updateProduct = async (id, product) => {
   return updateProduct;
 };
 
-const findProductDetailById = async (id) => {
-  try {
-    const productId = parseInt(id, 10);
-    
-    const productDetail = await Product.findByPk(productId);
-    return productDetail;
-  } catch (error) {
-    throw error;
-  }
-}
-
 module.exports = {
   createProduct,
   findAllProduct,
+  findProduct,
   destroyProduct,
   updateProduct,
   recoverProduct,
-  findProductDetailById
 };

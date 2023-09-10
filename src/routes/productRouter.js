@@ -2,15 +2,18 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllProduct,
+  getProduct,
   putProduct,
   deleteProduct,
   postProduct,
-  getProductDetail 
 } = require("../handlers/productHandler");
 const getFilterProduct = require("../handlers/filterProductHandler");
 const bulkProducts = require("../controllers/bulkProducts");
 // ruta que trae todos los productos
 router.get("/", getAllProduct);
+
+// ruta que trae producto por id
+router.get("/:id", getProduct);
 
 // ruta para crear un producto
 router.post("/", postProduct);
@@ -40,7 +43,5 @@ EJEMPLO = /filter?name=milanesa&price=1000
 En este ejemplo trae todos los productos que en su nombre contengan la palabra milanesa y valgan 1000 o menos de 1000.
 */
 router.get("/filter", getFilterProduct);
-
-router.get("/:productId", getProductDetail);
 
 module.exports = router;
