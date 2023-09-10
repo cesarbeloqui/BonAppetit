@@ -1,10 +1,10 @@
 const {
   createProduct,
   findAllProduct,
+  findProduct,
   destroyProduct,
   recoverProduct,
   updateProduct,
-  findProductDetailById
 } = require("../controllers/product.js");
 
 //trae todos los productos
@@ -12,6 +12,21 @@ const getAllProduct = async (req, res) => {
   try {
     const productClass = await findAllProduct();
     res.status(200).json(productClass);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+//ruta del detalle del pedido
+const getProduct = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const product = await findProduct(id);
+    if (!product) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+    res.status(200).json(product);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -60,25 +75,10 @@ const putProduct = async (req, res) => {
   }
 };
 
-//ruta del detalle del pedido
-const getProductDetail = async (req, res) => {
-  const productId = req.params.productId;
-  try {
-    const productDetail = await findProductDetailById(productId);
-    if (!productDetail) {
-      return res.status(404).json({ error: "Producto no encontrado" });
-    }
-    res.status(200).json(productDetail);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-}
-
-
 module.exports = {
   getAllProduct,
+  getProduct,
   putProduct,
   deleteProduct,
   postProduct,
-  getProductDetail,
 };

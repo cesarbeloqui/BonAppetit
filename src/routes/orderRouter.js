@@ -7,6 +7,7 @@ const {
   updateStatus,
   deleteOrder,
   notification,
+  getOrderById
 } = require("../handlers/orderHandler");
 
 //-----------------------------------------------------------------------------------------
@@ -77,9 +78,13 @@ router.delete("/delete/:id", deleteOrder);
 
 //-----------------------------------------------------------------------------------------
 
+
 /*ruta para notificaciones Mercado Pago */
 router.post('/webhook' , (req,res) => {
   const data =(req.body.data)
   console.log(data)})
+
+router.get("/:id", getOrderById);
+
 
 module.exports = router;
