@@ -1,6 +1,14 @@
-const handleVerifyEmail = (object) => { 
-    const { mode, oobCode, lang } = object
-    return { mode, oobCode, lang }
- }
+const admin = require("firebase-admin");
 
-module.exports = handleVerifyEmail
+const handleVerifyEmail = async (object) => {
+  const { oobCode } = object;
+  try {
+    const response = await admin.auth().applyActionCode(oobCode);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = handleVerifyEmail;

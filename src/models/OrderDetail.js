@@ -1,7 +1,9 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define("OrderDetail", {
+  sequelize.define(
+    "OrderDetail",
+    {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -9,15 +11,16 @@ module.exports = (sequelize) => {
         unique: true,
       },
       price: {
-        type: DataTypes.DECIMAL(10, 2),
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      stock: {
-        type: DataTypes.BOOLEAN
+      amount: {
+        type: DataTypes.INTEGER,
+        dafaultValue: 1,
       },
-      extras:{
-        type:DataTypes.STRING,
-      }
+      extras: {
+        type: DataTypes.STRING,
+      },
     },
     { timestamps: false }
   );
