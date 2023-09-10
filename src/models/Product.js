@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+
       image: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,7 +33,7 @@ module.exports = (sequelize) => {
       },
       time: {
         type: DataTypes.TIME,
-        allowNull: false   
+           
       },
       enable: {
         type: DataTypes.BOOLEAN,
