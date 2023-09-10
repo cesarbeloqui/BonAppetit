@@ -6,6 +6,8 @@ const {
   removeOrder,
 } = require("../controllers/orderController");
 
+const  {payment_notification
+} = require("./../controllers/paymentController.js")
 //-----------------------------------------------------------------------------------------
 
 const postOrder = async (req, res) => {
@@ -89,6 +91,19 @@ const deleteOrder = async (req, res) => {
 };
 
 //-----------------------------------------------------------------------------------------
+const notification = async (req, res) => {
+ 
+  try {
+    console.log('entro')
+    await payment_notification();
+    res.status(200)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
 
 module.exports = {
   postOrder,
@@ -96,4 +111,5 @@ module.exports = {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
+  notification,
 };

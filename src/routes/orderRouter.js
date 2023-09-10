@@ -6,6 +6,7 @@ const {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
+  notification,
 } = require("../handlers/orderHandler");
 
 //-----------------------------------------------------------------------------------------
@@ -75,5 +76,9 @@ Le pasamos por params el id del producto que queramos borrar
 router.delete("/delete/:id", deleteOrder);
 
 //-----------------------------------------------------------------------------------------
+
+/*ruta para notificaciones Mercado Pago */
+router.post('/webhook' , (req,res) => {
+  console.log(req.body.data)})
 
 module.exports = router;
