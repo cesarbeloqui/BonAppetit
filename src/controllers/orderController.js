@@ -73,6 +73,12 @@ const orderPaid = async (id) => {
       by: detail.amount,
       where: { id: detail.id },
     });
+
+    const product = await Product.findByPk(detail.id);
+
+    if (product.stock === 0) {
+      await Product.update({ enable: false }, { where: { id: detail.id } });
+    }
   });
 
   return order;
