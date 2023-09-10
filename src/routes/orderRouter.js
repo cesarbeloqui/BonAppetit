@@ -6,6 +6,7 @@ const {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
+  getOrderById
 } = require("../handlers/orderHandler");
 
 //-----------------------------------------------------------------------------------------
@@ -75,5 +76,7 @@ Le pasamos por params el id del producto que queramos borrar
 router.delete("/delete/:id", deleteOrder);
 
 //-----------------------------------------------------------------------------------------
+
+router.get("/:id", getOrderById);
 
 module.exports = router;

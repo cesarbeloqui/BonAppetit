@@ -104,10 +104,20 @@ const removeOrder = async (id) => {
 
 //-----------------------------------------------------------------------------------------
 
+const findOrderById = async(orderId) => {
+  try {
+    const order = await Order.findByPk(orderId);
+    return order;
+  } catch (error) {
+    throw error;
+  }
+};
+
 module.exports = {
   createOrder,
   filterOrder,
   orderPaid,
   changeStatus,
   removeOrder,
+  findOrderById,
 };
