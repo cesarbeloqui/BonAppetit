@@ -1,10 +1,10 @@
 const mercadopago = require("mercadopago");
-const { URL_SUCCESS, URL_FAILURE , URL_NOTIFICATION } = process.env;
+const { URL_SUCCESS, URL_FAILURE , URL_NOTIFICATION , MP_TOKEN } = process.env;
 
 
 // REPLACE WITH YOUR ACCESS TOKEN AVAILABLE IN: https://developers.mercadopago.com/panel
 mercadopago.configure({
-	access_token: "TEST-364800963197721-090915-6a620697a31e5836a9edf4a9a6fbbde6-1474242935",
+	access_token: MP_TOKEN,
 });
 
 
@@ -21,8 +21,8 @@ const payment = async ( total ) => {
 			}
 		],
 		back_urls: {
-			"success": `${URL_SUCCESS}/success`,
-			"failure": `${URL_FAILURE}/error`,
+			"success": `${URL_SUCCESS}`,
+			"failure": `${URL_FAILURE}`,
 			
 		},
 		

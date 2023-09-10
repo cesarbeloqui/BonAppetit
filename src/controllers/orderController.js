@@ -38,7 +38,7 @@ const createOrder = async (arrOrderDetail, idUser ,status) => {
   }
   
   const order  = await create(arrOrderDetail,idUser)
-  order.status  = "Pagar"
+  
   return order
 
 }

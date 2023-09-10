@@ -79,6 +79,7 @@ router.delete("/delete/:id", deleteOrder);
 
 /*ruta para notificaciones Mercado Pago */
 router.post('/webhook' , (req,res) => {
-  console.log(req.body.data)})
+  const data =(req.body.data)
+  console.log(data)})
 
 module.exports = router;
