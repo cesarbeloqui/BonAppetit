@@ -7,12 +7,13 @@ const {
   postProduct,
 } = require("../handlers/productHandler");
 const getFilterProduct = require("../handlers/filterProductHandler");
-
+const bulkProducts = require("../controllers/bulkProducts");
 // ruta que trae todos los productos
 router.get("/", getAllProduct);
 
 // ruta para crear un producto
 router.post("/", postProduct);
+router.post("/bulk", bulkProducts);
 
 // ruta para borrar   ( borrado logico )
 router.delete("/:id", deleteProduct);
