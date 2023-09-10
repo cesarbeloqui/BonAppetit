@@ -1,6 +1,8 @@
 const { time } = require('console')
 const { Product , ProductClass } = require ('../db')
 
+
+
 const findAllProduct = async () => {
   const product = await Product.findAll({
     where: { deleted: false },
@@ -66,10 +68,22 @@ const updateProduct = async (id, product) => {
   return updateProduct;
 };
 
+const findProductDetailById = async (id) => {
+  try {
+    const productId = parseInt(id, 10);
+    
+    const productDetail = await Product.findByPk(productId);
+    return productDetail;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   createProduct,
   findAllProduct,
   destroyProduct,
   updateProduct,
   recoverProduct,
+  findProductDetailById
 };

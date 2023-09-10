@@ -5,6 +5,7 @@ const {
   putProduct,
   deleteProduct,
   postProduct,
+  getProductDetail 
 } = require("../handlers/productHandler");
 const getFilterProduct = require("../handlers/filterProductHandler");
 
@@ -36,5 +37,7 @@ EJEMPLO = /filter?name=milanesa&price=1000
 En este ejemplo trae todos los productos que en su nombre contengan la palabra milanesa y valgan 1000 o menos de 1000.
 */
 router.get("/filter", getFilterProduct);
+
+router.get("/:productId", getProductDetail);
 
 module.exports = router;

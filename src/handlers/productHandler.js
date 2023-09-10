@@ -4,6 +4,7 @@ const {
   destroyProduct,
   recoverProduct,
   updateProduct,
+  findProductDetailById
 } = require("../controllers/product.js");
 
 //trae todos los productos
@@ -59,9 +60,25 @@ const putProduct = async (req, res) => {
   }
 };
 
+//ruta del detalle del pedido
+const getProductDetail = async (req, res) => {
+  const productId = req.params.productId;
+  try {
+    const productDetail = await findProductDetailById(productId);
+    if (!productDetail) {
+      return res.status(404).json({ error: "Producto no encontrado" });
+    }
+    res.status(200).json(productDetail);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
+
 module.exports = {
   getAllProduct,
   putProduct,
   deleteProduct,
   postProduct,
+  getProductDetail,
 };
