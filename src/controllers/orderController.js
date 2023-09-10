@@ -58,8 +58,23 @@ const filterOrder = async (filterBy) => {
 //-----------------------------------------------------------------------------------------
 
 const orderPaid = async (id) => {
-  await Order.update({ payment_status: true }, { where: { id: id } });
-  const order = await Order.findByPk(id);
+  await Order.update(
+    { payment_status: true, status: "En_preparacion" },
+    { where: { id: id } }
+  );
+  const order = await Order.findByPk(id, {
+    include: {
+      model: OrderDetail,
+    },
+  });
+
+  await order.OrderDetails.forEach(async (detail) => {
+    await Product.decrement("stock", {
+      by: detail.amount,
+      where: { id: detail.id },
+    });
+  });
+
   return order;
 };
 
@@ -76,7 +91,7 @@ const changeStatus = async (id, status) => {
 const removeOrder = async (id) => {
   return await Order.destroy({
     where: {
-      id: 1,
+      id: id,
     },
   });
 };
