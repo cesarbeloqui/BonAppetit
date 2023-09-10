@@ -9,7 +9,7 @@ const findAllProduct = async () => {
     order: ["id"],
     include: {
       model: ProductClass,
-      attributes: ["class"],
+      attributes: ["class", "image"],
       through: {
         attributes: [],
       },
