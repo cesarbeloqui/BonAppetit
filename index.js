@@ -1,22 +1,17 @@
 const server = require("./src/app.js");
-const { conn, User } = require("./src/db.js");
-const admin = require("firebase-admin");
+const { conn } = require("./src/db.js");
+const loadingUsersFirebase = require("./src/utils/loadingUsersFirebase");
+const loadingFamilyAndProduct = require("./src/utils/loadingFamilyAndProduct");
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(async () => {
-  const { users } = await admin.auth().listUsers();
   try {
-    for (const user of users) {
-      await User.findOrCreate({
-        where: { email: user.email },
-        defaults: {
-          id: user.uid,
-          displayName: user.displayName,
-          email: user.email,
-        },
-      });
-    }
+    await loadingUsersFirebase();
     console.log("Los usuarios de Firebase han sido cargados correctamente");
+    await loadingFamilyAndProduct();
+    console.log(
+      "Los productos con sus familias han sido cargados correctamente"
+    );
   } catch (error) {
     console.error("Error al cargar datos iniciales:", error);
   }
