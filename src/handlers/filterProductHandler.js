@@ -1,14 +1,23 @@
 const filterProduct = require("../controllers/filterProductController");
 
 const getFilterProduct = async (req, res) => {
-  const { name, className, stock, enable, price, qualification, deleted } =
-    req.query;
+  const {
+    name,
+    className,
+    stock,
+    enable,
+    priceMin,
+    priceMax,
+    qualification,
+    deleted,
+  } = req.query;
   const filterBy = {
     name,
     className,
     stock,
     enable,
-    price,
+    priceMin,
+    priceMax,
     qualification,
     deleted,
   };

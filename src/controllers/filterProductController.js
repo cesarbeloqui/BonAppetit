@@ -38,8 +38,16 @@ const filterProduct = async (filterBy) => {
     where.enable = filterBy.enable;
   }
 
-  if (filterBy.price) {
-    where.price = { [Op.lte]: filterBy.price };
+  if (filterBy.priceMin && filterBy.priceMax) {
+    where.price = { [Op.between]: [filterBy.priceMin, filterBy.priceMax] };
+  }
+
+  if (filterBy.priceMin && !filterBy.priceMax) {
+    where.price = { [Op.gte]: filterBy.priceMin };
+  }
+
+  if (filterBy.priceMax && !filterBy.priceMin) {
+    where.price = { [Op.lte]: filterBy.priceMax };
   }
 
   if (filterBy.qualification) {
