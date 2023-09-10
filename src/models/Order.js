@@ -13,7 +13,8 @@ module.exports = (sequelize) => {
         "En_preparacion",
         "Para_entregar",
         "Entregado",
-        "Cancelado"
+        "Cancelado",
+        "Mercado_Pago",
       ),
       allowNull: false,
       defaultValue: "Pagar",

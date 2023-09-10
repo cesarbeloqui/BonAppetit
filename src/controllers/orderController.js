@@ -1,14 +1,15 @@
 const { Product, OrderDetail, Order } = require("../db");
+const { payment } = require ("./paymentController")
 
 //-----------------------------------------------------------------------------------------
 
-const createOrder = async (arrOrderDetail, idUser) => {
+const create = async (arrOrderDetail, idUser) => {
   let totalPrice = 0;
 
   const sumPrice = await arrOrderDetail.map(async (product) => {
     totalPrice += product.price * product.amount;
   });
-
+ 
   const newOrder = await Order.create({ total: totalPrice, UserId: idUser });
 
   await arrOrderDetail.forEach(async (product) => {
@@ -24,9 +25,22 @@ const createOrder = async (arrOrderDetail, idUser) => {
       });
     }
   });
-
+ 
   return newOrder;
 };
+
+const createOrder = async (arrOrderDetail, idUser ,status) => {
+  if (status === "Mercado_Pago"){
+    const order  = await create(arrOrderDetail,idUser)
+    return {order , link}
+  }
+  
+  const order  = await create(arrOrderDetail,idUser)
+  order.status  = "Pagar"
+  return order
+
+}
+
 
 //-----------------------------------------------------------------------------------------
 
