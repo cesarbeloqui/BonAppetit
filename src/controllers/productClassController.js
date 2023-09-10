@@ -25,7 +25,6 @@ const destroyProductClass = async (id) => {
 };
 
 const updateProductClass = async (id, productClass) => {
-  console.log(id)
   await ProductClass.update(
     productClass,
     { where: { Id: id } }

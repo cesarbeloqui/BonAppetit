@@ -41,11 +41,9 @@ const deleteProductClass = async (req, res) => {
 // handler para actualizar clase de Producto
 const putProductClass = async (req, res) => {
   try {
-    console.log('entro')
     const { id } = req.params;
-    const  productClass = req.body;
-    console.log(productClass,enable,image)
-    const updateClass = await updateProductClass(id,productClass);
+    const { productClass } = req.body;
+    const updateClass = await updateProductClass(id, productClass);
     res.status(201).send(updateClass);
   } catch (error) {
     res.status(400).json({ error: error.message });
