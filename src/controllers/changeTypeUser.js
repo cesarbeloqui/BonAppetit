@@ -6,7 +6,7 @@ const changeTypeUser = async (req, res) => {
     const user = await User.findByPk(id);
     console.log(user);
     if (!user) {
-      res.status(404).json("El usuario no fue encontrado");
+      return res.status(404).json("El usuario no fue encontrado");
     }
     user.role = role;
     await user.save();
