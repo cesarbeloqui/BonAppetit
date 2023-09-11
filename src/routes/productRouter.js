@@ -11,20 +11,6 @@ const getFilterProduct = require("../handlers/filterProductHandler");
 const bulkProducts = require("../controllers/bulkProducts");
 // ruta que trae todos los productos
 router.get("/", getAllProduct);
-
-// ruta que trae producto por id
-router.get("/:id", getProduct);
-
-// ruta para crear un producto
-router.post("/", postProduct);
-router.post("/bulk", bulkProducts);
-
-// ruta para borrar   ( borrado logico )
-router.delete("/:id", deleteProduct);
-
-// ruta para recuperar o editar producto
-router.put("/:id", putProduct);
-
 //rutas para filtrado de productos
 /*
 POR NOMBRE DE PRODUCTO(BUSCA COINCIDENCIA CON CUALQUIER STRING QUE LE PASEMOS) = /filter?name=string
@@ -43,5 +29,17 @@ EJEMPLO = /filter?name=milanesa&price=1000
 En este ejemplo trae todos los productos que en su nombre contengan la palabra milanesa y valgan 1000 o menos de 1000.
 */
 router.get("/filter", getFilterProduct);
+
+// ruta para crear un producto
+router.post("/", postProduct);
+router.post("/bulk", bulkProducts);
+// ruta que trae producto por id
+router.get("/:id", getProduct);
+
+// ruta para borrar   ( borrado logico )
+router.delete("/:id", deleteProduct);
+
+// ruta para recuperar o editar producto
+router.put("/:id", putProduct);
 
 module.exports = router;

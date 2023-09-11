@@ -5,11 +5,11 @@ const findAllProductClasses = async () => {
   return classes;
 };
 
-const createProductClass = async (productClass,image) => {
-  console.log(image)
+const createProductClass = async (productClass, image) => {
+  console.log(image);
   const newClass = await ProductClass.create({
     class: productClass,
-    image: image
+    image: image,
   });
   return newClass;
 };
@@ -25,11 +25,7 @@ const destroyProductClass = async (id) => {
 };
 
 const updateProductClass = async (id, productClass) => {
-  console.log(id)
-  await ProductClass.update(
-    productClass,
-    { where: { Id: id } }
-  );
+  await ProductClass.update(productClass, { where: { id: id } });
   const updateClass = ProductClass.findByPk(id);
   return updateClass;
 };

@@ -19,8 +19,8 @@ const getAllProductClasses = async (req, res) => {
 const postProductClass = async (req, res) => {
   try {
     const { productClass, image } = req.body;
-    console.log(productClass, image)
-    await createProductClass(productClass,image);
+    console.log(productClass, image);
+    await createProductClass(productClass, image);
     res.status(201).send("Clase de producto creada con exito!!");
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -43,9 +43,8 @@ const putProductClass = async (req, res) => {
   try {
     console.log('entro')
     const { id } = req.params;
-    const  productClass = req.body;
-    console.log(productClass,enable,image)
-    const updateClass = await updateProductClass(id,productClass);
+    const productClass = req.body;
+    const updateClass = await updateProductClass(id, productClass);
     res.status(201).send(updateClass);
   } catch (error) {
     res.status(400).json({ error: error.message });
