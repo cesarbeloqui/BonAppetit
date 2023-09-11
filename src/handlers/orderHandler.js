@@ -7,13 +7,16 @@ const {
   findOrderById
 } = require("../controllers/orderController");
 
+const  {payment_notification
+} = require("./../controllers/paymentController.js")
 //-----------------------------------------------------------------------------------------
 
 const postOrder = async (req, res) => {
-  const { arrDetails, idUser } = req.body;
+  
+  const { arrDetails, idUser,status } = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser);
+    const addOrder = await createOrder(arrDetails, idUser ,status );
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {
@@ -89,6 +92,19 @@ const deleteOrder = async (req, res) => {
 };
 
 //-----------------------------------------------------------------------------------------
+const notification = async (req, res) => {
+ 
+  try {
+    console.log('entro')
+    await payment_notification();
+    res.status(200)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
 
 const getOrderById = async (req, res) => {
   const orderId = req.params.id;
@@ -109,5 +125,6 @@ module.exports = {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
+  notification,
   getOrderById
 };
