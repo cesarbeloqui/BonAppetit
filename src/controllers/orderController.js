@@ -6,7 +6,7 @@ const { payment } = require ("./paymentController")
 const create = async (arrOrderDetail, idUser) => {
   let totalPrice = 0;
 
-  const sumPrice = await arrOrderDetail.map(async (product) => {
+  await arrOrderDetail.map((product) => {
     totalPrice += product.price * product.amount;
   });
  
@@ -25,8 +25,17 @@ const create = async (arrOrderDetail, idUser) => {
       });
     }
   });
+
  
-  return newOrder;
+  const order = await Order.findByPk(newOrder.id, {
+    include: {
+      model: OrderDetail,
+      include: [Product],
+    },
+  });
+
+  return order;
+
 };
 
 const createOrder = async (arrOrderDetail, idUser ,status) => {
@@ -41,7 +50,7 @@ const createOrder = async (arrOrderDetail, idUser ,status) => {
   
   return order
 
-}
+};
 
 
 //-----------------------------------------------------------------------------------------
@@ -65,6 +74,7 @@ const filterOrder = async (filterBy) => {
     where: where,
     include: {
       model: OrderDetail,
+      include: [Product],
     },
   });
 
@@ -81,6 +91,7 @@ const orderPaid = async (id) => {
   const order = await Order.findByPk(id, {
     include: {
       model: OrderDetail,
+      include: [Product],
     },
   });
 
@@ -104,7 +115,12 @@ const orderPaid = async (id) => {
 
 const changeStatus = async (id, status) => {
   await Order.update({ status: status }, { where: { id: id } });
-  const order = await Order.findByPk(id);
+  const order = await Order.findByPk(id, {
+    include: {
+      model: OrderDetail,
+      include: [Product],
+    },
+  });
   return order;
 };
 
