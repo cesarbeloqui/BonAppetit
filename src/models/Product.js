@@ -28,11 +28,17 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       qualification: {
-        type: DataTypes.ENUM("1", "2", "3", "4", "5"),
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5,
+        },
+        defaultValue: 3,
       },
       time: {
         type: DataTypes.TIME,
-        allowNull: false   
+        allowNull: false,
       },
       enable: {
         type: DataTypes.BOOLEAN,

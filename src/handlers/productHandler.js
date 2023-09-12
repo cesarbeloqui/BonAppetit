@@ -6,6 +6,8 @@ const {
   recoverProduct,
   updateProduct,
 } = require("../controllers/product.js");
+const { Product, ProductClass } = require("../db");
+const { Op } = require("sequelize");
 
 //trae todos los productos
 const getAllProduct = async (req, res) => {
@@ -35,11 +37,57 @@ const getProduct = async (req, res) => {
 // para crear un producto
 const postProduct = async (req, res) => {
   try {
-    const product = req.body;
-    const newProduct = await createProduct(product);
-    res.status(201).json(newProduct);
+    const {
+      name,
+      price,
+      image,
+      stock,
+      enable,
+      productClass,
+      description,
+      time,
+      qualification,
+    } = req.body;
+
+    if (!name || !price || !image || !productClass || !time) {
+      return res
+        .status(404)
+        .json({ error: "faltan datos para crear producto" });
+    }
+
+    const classesExists = await ProductClass.findAll();
+
+    if (classesExists.length === 0) {
+      return res.status(404).json({
+        error: "debe cargar clases de comida antes de agregar productos",
+      });
+    }
+
+    const filteredProducts = await Product.findOne({
+      where: { name: name },
+    });
+
+    if (filteredProducts) {
+      return res.status(404).json({
+        error: `El producto ${name} ya existe`,
+      });
+    } else {
+      const product = {
+        name,
+        price,
+        image,
+        stock,
+        enable,
+        productClass,
+        description,
+        time,
+        qualification,
+      };
+      const newProduct = await createProduct(product);
+      res.status(201).json(newProduct);
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
