@@ -1,5 +1,5 @@
 const { Product, OrderDetail, Order } = require("../db");
-const { payment } = require ("./paymentController")
+const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ const create = async (arrOrderDetail, idUser) => {
   await arrOrderDetail.map((product) => {
     totalPrice += product.price * product.amount;
   });
- 
+
   const newOrder = await Order.create({ total: totalPrice, UserId: idUser });
 
   await arrOrderDetail.forEach(async (product) => {
@@ -26,7 +26,6 @@ const create = async (arrOrderDetail, idUser) => {
     }
   });
 
- 
   const order = await Order.findByPk(newOrder.id, {
     include: {
       model: OrderDetail,
@@ -35,23 +34,19 @@ const create = async (arrOrderDetail, idUser) => {
   });
 
   return order;
-
 };
 
-const createOrder = async (arrOrderDetail, idUser ,status) => {
-  if (status === "Mercado_Pago"){
-    
-    const order  = await create(arrOrderDetail,idUser)
-    const link = await payment (order.total)
-    return {order , link}
+const createOrder = async (arrOrderDetail, idUser, status) => {
+  if (status === "Mercado_Pago") {
+    const order = await create(arrOrderDetail, idUser);
+    const link = await payment(order.total);
+    return { order, link };
   }
-  
-  const order  = await create(arrOrderDetail,idUser)
-  
-  return order
 
+  const order = await create(arrOrderDetail, idUser);
+
+  return order;
 };
-
 
 //-----------------------------------------------------------------------------------------
 
@@ -136,13 +131,14 @@ const removeOrder = async (id) => {
 
 //-----------------------------------------------------------------------------------------
 
-const findOrderById = async(orderId) => {
-  try {
-    const order = await Order.findByPk(orderId);
-    return order;
-  } catch (error) {
-    throw error;
-  }
+const findOrderById = async (orderId) => {
+  const order = await Order.findByPk(orderId, {
+    include: {
+      model: OrderDetail,
+      include: [Product],
+    },
+  });
+  return order;
 };
 
 module.exports = {
