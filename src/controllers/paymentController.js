@@ -1,5 +1,7 @@
 const mercadopago = require("mercadopago");
 const { URL_SUCCESS, URL_FAILURE , URL_NOTIFICATION , MP_TOKEN } = process.env;
+const axios = require ('axios');
+const { Order } = require("../db");
 
 
 // REPLACE WITH YOUR ACCESS TOKEN AVAILABLE IN: https://developers.mercadopago.com/panel
@@ -8,13 +10,12 @@ mercadopago.configure({
 });
 
 
-const payment = async ( total ) => {
-
-
+const payment = async ( total , idpedido) => {
 
 	let preference = {
 		items: [
 			{
+				id: idpedido,
 				title: "Bon Appetit",
 				unit_price: total,
 				quantity: 1,
@@ -25,27 +26,43 @@ const payment = async ( total ) => {
 			"failure": `${URL_FAILURE}`,
 			
 		},
-		
-        //notification_url:`${URL_NOTIFICATION}/order/webhook`,
+		metadata: { 
+            payment_id: idpedido
+         },
+
+        notification_url:`${URL_NOTIFICATION}/order/webhook`,
 		auto_return: "approved",
         
 	};
 
 	const link  = await mercadopago.preferences.create(preference)
-
+ 	
 	return link.body.init_point
-   
+  
 };
-const payment_notification =  async ( req, res) => {
-	console.log('estoy en notification')
-    console.log(req.body)
-	if (req.body.action === 'payment.created' && req.body.data) {
-		console.log('entro el pago', req.body.data)
-	// 	buscar en base de datos el id 
-	// 	cambiar estado de created por el nuevo estado de pagado
-	// 	cuando se entregue la comida pasara al ultimo estado final, que es delivered.
-	}
+const payment_notification = async  ( req ) => {
+	const notification =  req.body;
+	if ( notification.data && notification.type=== 'payment'){
+		const respWebHook = notification.data.id
+		const config = {
+			headers: { Authorization: `Bearer ${MP_TOKEN}` }
+		};
+		const recoverPayment = await axios.get(`https://api.mercadopago.com/v1/payments/${respWebHook}`, config)
+		.then((response) => response.data)
+		.catch((error) => new Error(error))
 
+		if(recoverPayment.status==='approved'){
+			const orderId= recoverPayment.metadata.payment_id
+			await Order.update({
+				status: "En_preparacion",
+			},{ 
+				where : 
+				{
+					id: orderId
+				}
+			})
+		}
+	}
 }
 
 module.exports = {payment , payment_notification}
