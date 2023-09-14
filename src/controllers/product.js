@@ -30,13 +30,6 @@ const createProduct = async ({
   description,
   time,
 }) => {
-  console.log(name, price, image, productClass);
-  if (!name || !price || !image || productClass || time) {
-    ("faltan datos para crear producto");
-  }
-  if ((await ProductClass.findAll()).length < 1) {
-    return "debe cargar clases de comida antes de agregar productos";
-  }
   const newProduct = await Product.create({
     name,
     price,
