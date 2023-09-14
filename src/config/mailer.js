@@ -9,7 +9,9 @@ const mail_rover = async (callback) => {
     accountTransport.auth.clientSecret,
     "https://developers.google.com/oauthplayground"
   );
-    console.log(accountTransport);
+
+  console.log(accountTransport);
+
   oauth2Client.setCredentials({
     refresh_token: accountTransport.auth.refreshToken,
     tls: {
@@ -23,4 +25,4 @@ const mail_rover = async (callback) => {
   });
 };
 
-module.exports = {mail_rover, accountTransport};
+module.exports = { mail_rover, accountTransport };
