@@ -6,7 +6,7 @@ const {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
-  notification,
+  webHookNotification,
   getOrderById,
 } = require("../handlers/orderHandler");
 
@@ -81,10 +81,8 @@ router.delete("/delete/:id", deleteOrder);
 //-----------------------------------------------------------------------------------------
 
 /*ruta para notificaciones Mercado Pago */
-router.post("/webhook", (req, res) => {
-  const data = req.body.data;
-  console.log(data);
-});
+router.post("/webhook", webHookNotification);
+
 
 //Ruta para buscar orden por id
 router.get("/:id", getOrderById);
