@@ -60,7 +60,7 @@ const handlerCreateUser = async (req) => {
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
-      mail_rover(async (transporter) => {
+      await mail_rover(async (transporter) => {
         const mailOptions = {
           from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
           to: `${email}`, // Cambia esto al destinatario deseado
