@@ -57,17 +57,18 @@ const handlerCreateUser = async (req) => {
         url: `${URL_FRONT}`,
         handleCodeInApp: true,
       };
+
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
-      const mail = mail_rover(async (transporter) => {
-        const mailOptions = {
-          from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
-          to: `${email}`, // Cambia esto al destinatario deseado
-          subject: "Confirmación del correo electrónico",
-          text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
-        };
-
+      const mailOptions = {
+        from: `	
+        noreply.bonapptit@gmail.com`, // Cambia esto a tu dirección de correo
+        to: `${email}`, // Cambia esto al destinatario deseado
+        subject: "Confirmación del correo electrónico",
+        text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
+      };
+      await mail_rover(async (transporter) => {
         try {
           const info = await transporter.sendMail(mailOptions);
           console.log("Correo enviado:", info.response);
@@ -75,7 +76,6 @@ const handlerCreateUser = async (req) => {
           console.error("Error al enviar el correo:", err);
         }
       });
-      console.log(mail);
 
       return { userRecord, link, userToken };
     } else {
