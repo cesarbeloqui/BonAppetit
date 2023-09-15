@@ -9,9 +9,9 @@ const accountTransport = {
     clientSecret: process.env.CLIENT_SECRET_EMAIL,
     refreshToken: process.env.REFRESH_TOKEN_EMAIL,
   },
-  tls: {
+/*   tls: {
     rejectUnauthorized: false,
-  },
+  } */
 };
 
 module.exports = accountTransport;

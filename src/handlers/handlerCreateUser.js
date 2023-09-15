@@ -54,13 +54,14 @@ const handlerCreateUser = async (req) => {
     // Envía el correo de verificación después de crear el usuario
     if (createUserInDB) {
       const actionCodeSettings = {
-        url: `${URL_FRONT}`,
+        url: `https://bonappetite.vercel.app/customer`,
         handleCodeInApp: true,
       };
+
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
-      const mail = mail_rover(async (transporter) => {
+      await mail_rover(async (transporter) => {
         const mailOptions = {
           from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
           to: `${email}`, // Cambia esto al destinatario deseado
@@ -75,7 +76,6 @@ const handlerCreateUser = async (req) => {
           console.error("Error al enviar el correo:", err);
         }
       });
-      console.log(mail);
 
       return { userRecord, link, userToken };
     } else {

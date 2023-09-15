@@ -4,7 +4,7 @@ const loadingUsersFirebase = require("./src/utils/loadingUsersFirebase");
 const loadingFamilyAndProduct = require("./src/utils/loadingFamilyAndProduct");
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(async () => {
+conn.sync({ force: true }).then(async () => {
   try {
     await loadingUsersFirebase();
     console.log("Los usuarios de Firebase han sido cargados correctamente");
