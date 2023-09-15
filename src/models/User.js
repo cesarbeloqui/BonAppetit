@@ -27,6 +27,11 @@ module.exports = (sequelize) => {
         allowNull: false,
         defaultValue: "Client",
       },
+      disable: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     },
     { timestamps: false }
   );
