@@ -44,6 +44,7 @@ const payment_notification = async  ( req ) => {
 	const notification =  req.body;
 	if ( notification.data && notification.type=== 'payment'){
 		const respWebHook = notification.data.id
+		console.log(notification.data.id)
 		const config = {
 			headers: { Authorization: `Bearer ${MP_TOKEN}` }
 		};
@@ -51,6 +52,7 @@ const payment_notification = async  ( req ) => {
 		.then((response) => response.data)
 		.catch((error) => new Error(error))
 
+		console.log(recoverPayment)
 		if(recoverPayment.status==='approved'){
 			const orderId= recoverPayment.metadata.payment_id
 			await Order.update({
