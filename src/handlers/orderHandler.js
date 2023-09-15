@@ -13,10 +13,10 @@ const  {payment_notification
 
 const postOrder = async (req, res) => {
   
-  const { arrDetails, idUser,status } = req.body;
+  const { arrDetails, idUser, status, userEmail } = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser ,status );
+    const addOrder = await createOrder(arrDetails, idUser , status, userEmail );
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {
