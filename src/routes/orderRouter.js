@@ -10,6 +10,8 @@ const {
   getOrderById,
 } = require("../handlers/orderHandler");
 
+const { handlerOrderByMail } = require("../handlers/handlerOrderByMail");
+
 //-----------------------------------------------------------------------------------------
 
 /*ruta para crear orden, recibe un array de objetos con cada detalle de orden (id 
@@ -84,5 +86,7 @@ router.post("/webhook", webHookNotification);
 
 //Ruta para buscar orden por id
 router.get("/:id", getOrderById);
+
+router.get("/email/:email", handlerOrderByMail);
 
 module.exports = router;

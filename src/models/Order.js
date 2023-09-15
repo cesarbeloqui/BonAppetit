@@ -28,5 +28,13 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    userEmail: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validation: {
+        isEmail: true
+      }
+    }
   });
 };
