@@ -4,8 +4,8 @@ const {
   orderPaid,
   changeStatus,
   removeOrder,
-  findOrderById
-} = require("../controllers/orderController");
+  findOrderById,
+  } = require("../controllers/orderController");
 
 const  {payment_notification
 } = require("./../controllers/paymentController.js")
@@ -13,10 +13,10 @@ const  {payment_notification
 
 const postOrder = async (req, res) => {
   
-  const { arrDetails, idUser,status } = req.body;
+  const { arrDetails, idUser, status, userEmail } = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser ,status );
+    const addOrder = await createOrder(arrDetails, idUser , status, userEmail );
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {
@@ -92,19 +92,14 @@ const deleteOrder = async (req, res) => {
 };
 
 //-----------------------------------------------------------------------------------------
-const notification = async (req, res) => {
- 
+const webHookNotification = async (req, res) => {
   try {
-    console.log('entro')
-    await payment_notification();
-    res.status(200)
+    await payment_notification(req);
+    res.status(200).send('notificacion recibida')
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
-
-
 
 const getOrderById = async (req, res) => {
   const orderId = req.params.id;
@@ -125,6 +120,6 @@ module.exports = {
   updateOrderPayment,
   updateStatus,
   deleteOrder,
-  notification,
+  webHookNotification,
   getOrderById
 };

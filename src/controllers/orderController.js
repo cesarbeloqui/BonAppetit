@@ -3,14 +3,18 @@ const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser) => {
+const create = async (arrOrderDetail, idUser, userEmail) => {
   let totalPrice = 0;
 
   await arrOrderDetail.map((product) => {
     totalPrice += product.price * product.amount;
   });
 
-  const newOrder = await Order.create({ total: totalPrice, UserId: idUser });
+  const newOrder = await Order.create({ 
+    total: totalPrice, 
+    UserId: idUser,
+    userEmail: userEmail
+   });
 
   await arrOrderDetail.forEach(async (product) => {
     const productExists = await Product.findByPk(product.idProduct);
@@ -21,6 +25,7 @@ const create = async (arrOrderDetail, idUser) => {
         price: product.price,
         amount: product.amount,
         extras: product.extras,
+        userEmail: product.userEmail,
         OrderId: newOrder.id,
       });
     }
@@ -36,14 +41,16 @@ const create = async (arrOrderDetail, idUser) => {
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status) => {
+const createOrder = async (arrOrderDetail, idUser, status, userEmail) => {
   if (status === "Mercado_Pago") {
-    const order = await create(arrOrderDetail, idUser);
+
+    const order = await create(arrOrderDetail, idUser, userEmail);
     const link = await payment(order.total);
+
     return { order, link };
   }
 
-  const order = await create(arrOrderDetail, idUser);
+  const order = await create(arrOrderDetail, idUser, userEmail);
 
   return order;
 };

@@ -57,6 +57,7 @@ const handlerCreateUser = async (req) => {
         url: `https://bonappetite.vercel.app/customer`,
         handleCodeInApp: true,
       };
+
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
@@ -119,29 +120,34 @@ const sendCustomPasswordResetEmail = async (email, link) => {
       console.error("Error al enviar el correo:", err);
     }
   });
-}
+};
 
-
-const changePasswordUser = async (req) =>{
+const changePasswordUser = async (req) => {
   const { email } = req.body;
   console.log("Valor de email:", email);
   try {
-  const userEmail = await admin.auth().getUserByEmail(email);
-  const actionCodeSettings = {
-    url: `${URL_FRONT}`, // URL de tu aplicación para restablecer la contraseña
-    handleCodeInApp: true, //Firebase manejara el restablecimiento de la contraseña
-  };
-  // console.log("valor de userEmail", userEmail);
-  const link = await admin.auth().generatePasswordResetLink(userEmail.email, actionCodeSettings);
+    const userEmail = await admin.auth().getUserByEmail(email);
+    const actionCodeSettings = {
+      url: `${URL_FRONT}`, // URL de tu aplicación para restablecer la contraseña
+      handleCodeInApp: true, //Firebase manejara el restablecimiento de la contraseña
+    };
+    // console.log("valor de userEmail", userEmail);
+    const link = await admin
+      .auth()
+      .generatePasswordResetLink(userEmail.email, actionCodeSettings);
     await sendCustomPasswordResetEmail(userEmail.email, link);
-    return { message: "Correo de restablecimiento de contraseña enviado con éxito" };
-}   catch(error) {
-      throw new Error(`Error al enviar correo de cambio de contraseña: ${error.message}`);
-    }
-}
+    return {
+      message: "Correo de restablecimiento de contraseña enviado con éxito",
+    };
+  } catch (error) {
+    throw new Error(
+      `Error al enviar correo de cambio de contraseña: ${error.message}`
+    );
+  }
+};
 
 module.exports = {
   handlerCreateUser,
   handlerDeleteUser,
-  changePasswordUser
+  changePasswordUser,
 };
