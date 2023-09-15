@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
         },
       },
       role: {
-        type: DataTypes.ENUM("Client", "Admin"),
+        type: DataTypes.ENUM("Client", "Admin", "Managers"),
         allowNull: false,
         defaultValue: "Client",
       },
