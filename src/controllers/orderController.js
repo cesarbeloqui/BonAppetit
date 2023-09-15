@@ -39,7 +39,8 @@ const create = async (arrOrderDetail, idUser) => {
 const createOrder = async (arrOrderDetail, idUser, status) => {
   if (status === "Mercado_Pago") {
     const order = await create(arrOrderDetail, idUser);
-    const link = await payment(order.total);
+    const link = await payment(order.total, order.id);
+    console.log (order.id)
     return { order, link };
   }
 
