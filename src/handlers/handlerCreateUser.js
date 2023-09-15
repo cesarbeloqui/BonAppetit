@@ -57,10 +57,11 @@ const handlerCreateUser = async (req) => {
         url: `${URL_FRONT}`,
         handleCodeInApp: true,
       };
+
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
-      const mail = mail_rover(async (transporter) => {
+      const mail = await mail_rover(async (transporter) => {
         const mailOptions = {
           from: `${accountTransport.auth.user}`, // Cambia esto a tu dirección de correo
           to: `${email}`, // Cambia esto al destinatario deseado
@@ -75,7 +76,6 @@ const handlerCreateUser = async (req) => {
           console.error("Error al enviar el correo:", err);
         }
       });
-      console.log(mail);
 
       return { userRecord, link, userToken };
     } else {
