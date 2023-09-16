@@ -11,7 +11,7 @@ mercadopago.configure({
 
 
 const payment = async ( total , idpedido) => {
-
+	
 	let preference = {
 		items: [
 			{
@@ -50,7 +50,6 @@ const payment_notification = async  ( req ) => {
 		const recoverPayment = await axios.get(`https://api.mercadopago.com/v1/payments/${respWebHook}`, config)
 		.then((response) => response.data)
 		.catch((error) => new Error(error))
-
 		if(recoverPayment.status==='approved'){
 			const orderId= recoverPayment.metadata.payment_id
 			await Order.update({

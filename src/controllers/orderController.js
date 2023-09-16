@@ -36,7 +36,7 @@ const create = async (arrOrderDetail, idUser , take_away) => {
       include: [Product],
     },
   });
-
+ 
   return order;
 };
 
@@ -44,7 +44,6 @@ const createOrder = async (arrOrderDetail, idUser, status ,take_away) => {
   if (status === "Mercado_Pago") {
     const order = await create(arrOrderDetail, idUser , take_away);
     const link = await payment(order.total , order.id);
-
     return { order, link };
   }
 
