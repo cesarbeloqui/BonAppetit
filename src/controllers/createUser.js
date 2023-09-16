@@ -1,7 +1,7 @@
 const {
-  handlerCreateUser,
-  handlerDeleteUser,
+  handlerCreateUser
 } = require("../handlers/handlerCreateUser");
+
 
 const createUser = async (req, res) => {
   try {
@@ -36,24 +36,6 @@ const createUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
-  try {
-    const { email } = req.body;
-
-    if (!email) {
-      return res
-        .status(400)
-        .json({ error: "El correo electrónico es requerido" });
-    }
-
-    const result = await handlerDeleteUser(email);
-    return res.status(200).json({ message: result });
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
-  }
-};
-
 module.exports = {
-  createUser,
-  deleteUser,
+  createUser
 };

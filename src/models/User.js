@@ -23,10 +23,15 @@ module.exports = (sequelize) => {
         },
       },
       role: {
-        type: DataTypes.ENUM("Client", "Admin", "Managers"),
+        type: DataTypes.ENUM( "Client", "Admin", "Manager" ),
         allowNull: false,
         defaultValue: "Client",
       },
+      disable: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+      }
     },
     { timestamps: false }
   );

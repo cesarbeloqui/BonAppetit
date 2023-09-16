@@ -1,7 +1,8 @@
 const admin = require("firebase-admin");
-const { mail_rover, accountTransport } = require("../config/mailer");
+//const { mail_rover, accountTransport } = require("../config/mailer");
 const URL_FRONT = process.env.URL_FRONT;
 const { User } = require("../db");
+const { sendEmail } = require("../config/sendGridConfig");
 
 /* 
 Esta es la posible respuesta de Firebase para un usuario nuevo
@@ -61,21 +62,13 @@ const handlerCreateUser = async (req) => {
       const link = await admin
         .auth()
         .generateEmailVerificationLink(userRecord.email, actionCodeSettings);
-      const mailOptions = {
-        from: `	
-        noreply.bonapptit@gmail.com`, // Cambia esto a tu dirección de correo
-        to: `${email}`, // Cambia esto al destinatario deseado
+      const msg = {
+        to: `${email}`,
+        from: `noreply.bonapptit@gmail.com`, // Use the email address or domain you verified above
         subject: "Confirmación del correo electrónico",
         text: `Haz click en el siguiente enlace para confirmar tu correo electrónico: ${link} \n\n Si no creaste esta cuenta, puedes ignorar este mensaje`,
       };
-      await mail_rover(async (transporter) => {
-        try {
-          const info = await transporter.sendMail(mailOptions);
-          console.log("Correo enviado:", info.response);
-        } catch (err) {
-          console.error("Error al enviar el correo:", err);
-        }
-      });
+      await sendEmail(msg);
 
       return { userRecord, link, userToken };
     } else {
@@ -83,24 +76,6 @@ const handlerCreateUser = async (req) => {
     }
   } catch (error) {
     throw new Error(error.message);
-  }
-};
-
-const handlerDeleteUser = async (email) => {
-  try {
-    // Encuentra al usuario por su correo electrónico
-    const user = await admin.auth().getUserByEmail(email);
-
-    if (!user) {
-      throw new Error("No se encontró al usuario");
-    }
-
-    // Elimina al usuario
-    await admin.auth().deleteUser(user.uid);
-
-    return "Usuario eliminado con éxito";
-  } catch (error) {
-    throw new Error(`Error al eliminar usuario: ${error.message}`);
   }
 };
 
@@ -148,6 +123,5 @@ const changePasswordUser = async (req) => {
 
 module.exports = {
   handlerCreateUser,
-  handlerDeleteUser,
-  changePasswordUser,
+  changePasswordUser
 };
