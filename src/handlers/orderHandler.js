@@ -5,18 +5,18 @@ const {
   changeStatus,
   removeOrder,
   findOrderById,
-  } = require("../controllers/orderController");
+} = require("../controllers/orderController");
 
-const  {payment_notification
-} = require("./../controllers/paymentController.js")
+const {
+  payment_notification,
+} = require("./../controllers/paymentController.js");
 //-----------------------------------------------------------------------------------------
 
 const postOrder = async (req, res) => {
-  
-  const { arrDetails, idUser, status, userEmail } = req.body;
+  const { arrDetails, idUser, status } = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser , status, userEmail );
+    const addOrder = await createOrder(arrDetails, idUser, status);
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {
@@ -32,8 +32,8 @@ const postOrder = async (req, res) => {
 //-----------------------------------------------------------------------------------------
 
 const getOrderFilters = async (req, res) => {
-  const { userId, status, payment_status } = req.query;
-  const filterBy = { userId, status, payment_status };
+  const { userId, userMail, status, payment_status } = req.query;
+  const filterBy = { userId, userMail, status, payment_status };
 
   try {
     const matches = await filterOrder(filterBy);
@@ -95,7 +95,7 @@ const deleteOrder = async (req, res) => {
 const webHookNotification = async (req, res) => {
   try {
     await payment_notification(req);
-    res.status(200).send('notificacion recibida')
+    res.status(200).send("notificacion recibida");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -121,5 +121,5 @@ module.exports = {
   updateStatus,
   deleteOrder,
   webHookNotification,
-  getOrderById
+  getOrderById,
 };

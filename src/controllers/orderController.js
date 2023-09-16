@@ -1,20 +1,19 @@
-const { Product, OrderDetail, Order } = require("../db");
+const { Product, OrderDetail, Order, User } = require("../db");
 const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser, userEmail) => {
+const create = async (arrOrderDetail, idUser) => {
   let totalPrice = 0;
 
   await arrOrderDetail.map((product) => {
     totalPrice += product.price * product.amount;
   });
 
-  const newOrder = await Order.create({ 
-    total: totalPrice, 
+  const newOrder = await Order.create({
+    total: totalPrice,
     UserId: idUser,
-    userEmail: userEmail
-   });
+  });
 
   await arrOrderDetail.forEach(async (product) => {
     const productExists = await Product.findByPk(product.idProduct);
@@ -25,7 +24,6 @@ const create = async (arrOrderDetail, idUser, userEmail) => {
         price: product.price,
         amount: product.amount,
         extras: product.extras,
-        userEmail: product.userEmail,
         OrderId: newOrder.id,
       });
     }
@@ -41,16 +39,15 @@ const create = async (arrOrderDetail, idUser, userEmail) => {
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status, userEmail) => {
+const createOrder = async (arrOrderDetail, idUser, status) => {
   if (status === "Mercado_Pago") {
-
-    const order = await create(arrOrderDetail, idUser, userEmail);
+    const order = await create(arrOrderDetail, idUser);
     const link = await payment(order.total);
 
     return { order, link };
   }
 
-  const order = await create(arrOrderDetail, idUser, userEmail);
+  const order = await create(arrOrderDetail, idUser);
 
   return order;
 };
@@ -62,6 +59,11 @@ const filterOrder = async (filterBy) => {
 
   if (filterBy.userId) {
     where.UserId = filterBy.userId;
+  }
+
+  if (filterBy.userMail) {
+    const user = await User.findOne({ where: { email: filterBy.userMail } });
+    where.UserId = user.id;
   }
 
   if (filterBy.status) {

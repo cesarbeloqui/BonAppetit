@@ -1,4 +1,4 @@
-const { DataTypes, Sequelize } = require("sequelize");
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("Order", {
@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
         "Para_entregar",
         "Entregado",
         "Cancelado",
-        "Mercado_Pago",
+        "Mercado_Pago"
       ),
       allowNull: false,
       defaultValue: "Pagar",
@@ -28,12 +28,5 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
-    userEmail: {
-      type: DataTypes.STRING,
-      allowNull: false, 
-      validation: {
-        isEmail: true
-      }
-    }
   });
 };
