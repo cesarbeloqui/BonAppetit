@@ -28,5 +28,9 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    take_away: {   
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,}
   });
 };
