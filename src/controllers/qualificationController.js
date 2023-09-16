@@ -1,29 +1,36 @@
 const { Qualification, Product } = require("../db");
 
 const qualifyProduct = async (arrQualification) => {
-  await arrQualification.map(async (qualification) => {
-    await Qualification.create({
-      qualification: qualification.points,
-      idProduct: qualification.idProduct,
-    });
+  for (const qualification of arrQualification) {
+    const exists = await Qualification.findByPk(qualification.idProduct);
 
-    const productRatings = await Qualification.findAll({
-      where: { idProduct: qualification.idProduct },
-    });
+    if (exists) {
+      const sum = exists.sum + qualification.points;
+      const amount = exists.amount + 1;
 
-    let ratingSum = 0;
+      await Qualification.update(
+        {
+          sum: sum,
+          amount: amount,
+        },
+        { where: { id: qualification.idProduct } }
+      );
+    } else {
+      await Qualification.create({
+        id: qualification.idProduct,
+        sum: qualification.points,
+        amount: 1,
+      });
+    }
 
-    await productRatings.map((rating) => {
-      ratingSum += rating.qualification;
-    });
-
-    const averageRating = Math.ceil(ratingSum / productRatings.length);
+    const rating = await Qualification.findByPk(qualification.idProduct);
+    const average = Math.ceil(rating.sum / rating.amount);
 
     await Product.update(
-      { qualification: averageRating },
+      { qualification: average },
       { where: { id: qualification.idProduct } }
     );
-  });
+  }
 };
 
 module.exports = qualifyProduct;

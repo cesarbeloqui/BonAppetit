@@ -6,18 +6,13 @@ module.exports = (sequelize) => {
     {
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
       },
-      qualification: {
+      sum: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        validate: {
-          min: 1,
-          max: 5,
-        },
       },
-      idProduct: {
+      amount: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
