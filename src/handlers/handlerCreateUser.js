@@ -55,7 +55,7 @@ const handlerCreateUser = async (req) => {
     // Envía el correo de verificación después de crear el usuario
     if (createUserInDB) {
       const actionCodeSettings = {
-        url: `${URL_FRONT}`,
+        url: `https://bonappetite.vercel.app/customer`,
         handleCodeInApp: true,
       };
 
