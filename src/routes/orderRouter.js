@@ -10,8 +10,6 @@ const {
   getOrderById,
 } = require("../handlers/orderHandler");
 
-const { handlerOrderByMail } = require("../handlers/handlerOrderByMail");
-
 //-----------------------------------------------------------------------------------------
 
 /*ruta para crear orden, recibe un array de objetos con cada detalle de orden (id 
@@ -39,6 +37,8 @@ El filtrado es sobre un enum, por ende estas son sus opciones:
 >Cancelado
 
 ?userId=idDelUsuario
+o
+?userMail=mailDelUsuario
 
 ?payment_status=boolean
 true los que estan pagos, false los que faltan pagar
@@ -83,10 +83,7 @@ router.delete("/delete/:id", deleteOrder);
 /*ruta para notificaciones Mercado Pago */
 router.post("/webhook", webHookNotification);
 
-
 //Ruta para buscar orden por id
 router.get("/:id", getOrderById);
-
-router.get("/email/:email", handlerOrderByMail);
 
 module.exports = router;
