@@ -45,7 +45,7 @@ const createOrder = async (arrOrderDetail, idUser, status, userEmail) => {
   if (status === "Mercado_Pago") {
 
     const order = await create(arrOrderDetail, idUser, userEmail);
-    const link = await payment(order.total);
+    const link = await payment(order.total, order.id);
 
     return { order, link };
   }
