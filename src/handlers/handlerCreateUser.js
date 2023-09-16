@@ -79,24 +79,6 @@ const handlerCreateUser = async (req) => {
   }
 };
 
-const handlerDeleteUser = async (email) => {
-  try {
-    // Encuentra al usuario por su correo electrónico
-    const user = await admin.auth().getUserByEmail(email);
-
-    if (!user) {
-      throw new Error("No se encontró al usuario");
-    }
-
-    // Elimina al usuario
-    await admin.auth().deleteUser(user.uid);
-
-    return "Usuario eliminado con éxito";
-  } catch (error) {
-    throw new Error(`Error al eliminar usuario: ${error.message}`);
-  }
-};
-
 const sendCustomPasswordResetEmail = async (email, link) => {
   // Configura el correo electrónico
   mail_rover(async (transporter) => {
@@ -141,6 +123,5 @@ const changePasswordUser = async (req) => {
 
 module.exports = {
   handlerCreateUser,
-  handlerDeleteUser,
-  changePasswordUser,
+  changePasswordUser
 };
