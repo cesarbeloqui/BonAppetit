@@ -13,10 +13,10 @@ const {
 //-----------------------------------------------------------------------------------------
 
 const postOrder = async (req, res) => {
-  const { arrDetails, idUser, status } = req.body;
+  const { arrDetails, idUser, status ,take_away} = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser, status);
+    const addOrder = await createOrder(arrDetails, idUser, status , take_away);
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {

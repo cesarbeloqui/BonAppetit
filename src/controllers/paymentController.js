@@ -54,6 +54,7 @@ const payment_notification = async  ( req ) => {
 			const orderId= recoverPayment.metadata.payment_id
 			await Order.update({
 				status: "En_preparacion",
+				payment_status: true,
 			},{ 
 				where : 
 				{

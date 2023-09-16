@@ -3,7 +3,7 @@ const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser) => {
+const create = async (arrOrderDetail, idUser , take_away) => {
   let totalPrice = 0;
 
   await arrOrderDetail.map((product) => {
@@ -13,6 +13,7 @@ const create = async (arrOrderDetail, idUser) => {
   const newOrder = await Order.create({
     total: totalPrice,
     UserId: idUser,
+    take_away: take_away,
   });
 
   await arrOrderDetail.forEach(async (product) => {
@@ -39,10 +40,10 @@ const create = async (arrOrderDetail, idUser) => {
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status) => {
-   if (status === "Mercado_Pago") {
-    const order = await create(arrOrderDetail, idUser);
-    const link = await payment(order.total ,order.id );
+const createOrder = async (arrOrderDetail, idUser, status ,take_away) => {
+  if (status === "Mercado_Pago") {
+    const order = await create(arrOrderDetail, idUser , take_away);
+    const link = await payment(order.total , order.id);
     return { order, link };
   }
 
