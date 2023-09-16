@@ -35,15 +35,14 @@ const create = async (arrOrderDetail, idUser) => {
       include: [Product],
     },
   });
-
+ 
   return order;
 };
 
 const createOrder = async (arrOrderDetail, idUser, status) => {
-  if (status === "Mercado_Pago") {
+   if (status === "Mercado_Pago") {
     const order = await create(arrOrderDetail, idUser);
-    const link = await payment(order.total);
-
+    const link = await payment(order.total ,order.id );
     return { order, link };
   }
 
