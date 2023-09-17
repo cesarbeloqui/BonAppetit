@@ -48,7 +48,6 @@ const postProduct = async (req, res) => {
       time,
       qualification,
     } = req.body;
-
     if (!name || !price || !image || !productClass || !time) {
       return res
         .status(404)
@@ -66,6 +65,10 @@ const postProduct = async (req, res) => {
     const filteredProducts = await Product.findOne({
       where: { name: name },
     });
+    const filteredClass = await ProductClass.findOne({
+      where: { class: productClass },
+    });
+    const {id} = filteredClass
 
     if (filteredProducts) {
       return res.status(404).json({
@@ -78,7 +81,7 @@ const postProduct = async (req, res) => {
         image,
         stock,
         enable,
-        productClass,
+        productClass: id,
         description,
         time,
         qualification,
