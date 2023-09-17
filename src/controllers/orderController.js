@@ -3,7 +3,7 @@ const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser , take_away) => {
+const create = async (arrOrderDetail, idUser, take_away) => {
   let totalPrice = 0;
 
   await arrOrderDetail.map((product) => {
@@ -36,14 +36,14 @@ const create = async (arrOrderDetail, idUser , take_away) => {
       include: [Product],
     },
   });
- 
+
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status ,take_away) => {
+const createOrder = async (arrOrderDetail, idUser, status, take_away) => {
   if (status === "Mercado_Pago") {
-    const order = await create(arrOrderDetail, idUser , take_away);
-    const link = await payment(order.total , order.id);
+    const order = await create(arrOrderDetail, idUser, take_away);
+    const link = await payment(order.total, order.id);
     return { order, link };
   }
 
@@ -99,18 +99,21 @@ const orderPaid = async (id) => {
     },
   });
 
-  await order.OrderDetails.forEach(async (detail) => {
+  for (const detail of order.OrderDetails) {
     await Product.decrement("stock", {
       by: detail.amount,
-      where: { id: detail.id },
+      where: { id: detail.ProductId },
     });
 
-    const product = await Product.findByPk(detail.id);
+    const product = await Product.findByPk(detail.ProductId);
 
     if (product.stock === 0) {
-      await Product.update({ enable: false }, { where: { id: detail.id } });
+      await Product.update(
+        { enable: false },
+        { where: { id: detail.ProductId } }
+      );
     }
-  });
+  }
 
   return order;
 };
