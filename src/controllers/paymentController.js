@@ -1,7 +1,7 @@
 const mercadopago = require("mercadopago");
 const { URL_SUCCESS, URL_FAILURE , URL_NOTIFICATION , MP_TOKEN } = process.env;
 const axios = require ('axios');
-const { Order } = require("../db");
+const { Product, OrderDetail, Order, User } = require("../db");
 
 
 // REPLACE WITH YOUR ACCESS TOKEN AVAILABLE IN: https://developers.mercadopago.com/panel
@@ -52,15 +52,33 @@ const payment_notification = async  ( req ) => {
 		.catch((error) => new Error(error))
 		if(recoverPayment.status==='approved'){
 			const orderId= recoverPayment.metadata.payment_id
-			await Order.update({
-				status: "En_preparacion",
-				payment_status: true,
-			},{ 
-				where : 
-				{
-					id: orderId
-				}
-			})
+			console.log('entra un vez y resta ')
+			await Order.update(
+				  { payment_status: true, status: "En_preparacion" },
+				  { where: { id: orderId } }
+				);
+			const order = await Order.findByPk(orderId, {
+				  include: {
+					model: OrderDetail,
+					include: [Product],
+				  },
+			});
+			  
+			for (const detail of order.OrderDetails) {
+				  await Product.decrement("stock", {
+					by: detail.amount,
+					where: { id: detail.ProductId },
+			});
+			  
+			const product = await Product.findByPk(detail.ProductId);
+			  
+			if (product.stock === 0) {
+					await Product.update(
+					  { enable: false },
+					  { where: { id: detail.ProductId } }
+					);
+				  }
+			}
 		}
 	}
 }
