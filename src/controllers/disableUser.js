@@ -1,43 +1,28 @@
 const { User } = require("../db");
 
-// const disableUser = async(uid) =>{
-//     try {
-//       const user = await User.findByPk(uid);
-//       if(!user){
-//         throw new Error("Usuario no encontrado");
-//       }
-//       if(user.role !== "Admin"){
-//         throw new Error("Acceso denegado. Solo los Admin pueden inhabilitar usuarios");
-//       }
-//       await User.update({ disabled: true}, {where: {id: uid}});
-//       return "Usuario inhabilitado con exito";
-//     } catch (error) {
-//       throw error;
-//     }
-//   };
-const disableUser = async (adminUid, targetUid) => {
-    try {
-      const admin = await User.findByPk(adminUid);
-      const targetUser = await User.findByPk(targetUid);
-      if (!admin || !targetUser) {
-        throw new Error("Usuario no encontrado");
-      }
-      if (admin.role !== "Admin") {
-        throw new Error("Acceso denegado. Solo los Admin pueden inhabilitar usuarios");
-      }
-      if (targetUser.role !== "Client") {
-        throw new Error("No puedes inhabilitar a un usuario que no es un cliente");
-      }
-      if(admin.role === "Admin"){
-          await User.update({ disabled: true }, { where: { id: targetUid } });
-          return "Usuario inhabilitado con éxito";
-      }
-    } catch (error) {
-      throw error;
+const disableUser = async (req, res) => {
+  try {
+  const { adminId, disable } = req.body;
+  const { uid } = req.params;
+    if (!adminId) {
+      return res.status(400).json({ error: "El campo adminId es obligatorio en el cuerpo de la solicitud." });
     }
-  };
-  
+    const admin = await User.findByPk(adminId);
+    if (!admin || admin.role !== "Admin") {
+      throw new Error("Acceso denegado. Se requiere rol de administrador.");
+    }
+    const targetUser = await User.findByPk(uid);
+    if (!targetUser) {
+      throw new Error("El usuario no se puede inhabilitar.");
+    }
+    targetUser.disable = disable;
+    await targetUser.save()
+    return res.status(200).json({ message: "Usuario inhabilitado con éxito" });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
 
-module.exports = {
-    disableUser
-}
+module.exports = {disableUser};
+
