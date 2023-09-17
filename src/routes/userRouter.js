@@ -6,7 +6,6 @@ const getAllUsers = require("../controllers/getAllUsers");
 const changeTypeUser = require("../controllers/changeTypeUser");
 const getAllUsersAdmins = require("../controllers/getAllUsersAdmins.js");
 const getAllUsersClients = require("../controllers/getAllUsersClients.js");
-// const {handlerDisableUser} = require("../handlers/handlerDisableUser");
 const {disableUser} = require("../controllers/disableUser");
 
 const userRouter = Router();
