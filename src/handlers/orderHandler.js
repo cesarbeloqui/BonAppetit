@@ -5,6 +5,7 @@ const {
   changeStatus,
   removeOrder,
   findOrderById,
+  findAllOrders,
 } = require("../controllers/orderController");
 
 const {
@@ -13,10 +14,10 @@ const {
 //-----------------------------------------------------------------------------------------
 
 const postOrder = async (req, res) => {
-  const { arrDetails, idUser, status ,take_away} = req.body;
+  const { arrDetails, idUser, status, take_away } = req.body;
 
   try {
-    const addOrder = await createOrder(arrDetails, idUser, status , take_away);
+    const addOrder = await createOrder(arrDetails, idUser, status, take_away);
     if (addOrder) {
       res.status(200).json(addOrder);
     } else {
@@ -31,11 +32,16 @@ const postOrder = async (req, res) => {
 
 //-----------------------------------------------------------------------------------------
 
-const getOrderFilters = async (req, res) => {
+const getOrders = async (req, res) => {
   const { userId, userMail, status, payment_status } = req.query;
   const filterBy = { userId, userMail, status, payment_status };
 
   try {
+    if (Object.keys(filterBy).length === 0) {
+      const allOrders = await findAllOrders();
+      return res.status(200).json(allOrders);
+    }
+
     const matches = await filterOrder(filterBy);
     if (matches.length > 0) {
       res.status(200).json(matches);
@@ -116,7 +122,7 @@ const getOrderById = async (req, res) => {
 
 module.exports = {
   postOrder,
-  getOrderFilters,
+  getOrders,
   updateOrderPayment,
   updateStatus,
   deleteOrder,

@@ -6,9 +6,9 @@ const { payment } = require("./paymentController");
 const create = async (arrOrderDetail, idUser, take_away) => {
   let totalPrice = 0;
 
-  await arrOrderDetail.map((product) => {
+  for (const product of arrOrderDetail) {
     totalPrice += product.price * product.amount;
-  });
+  }
 
   const newOrder = await Order.create({
     total: totalPrice,
@@ -16,7 +16,7 @@ const create = async (arrOrderDetail, idUser, take_away) => {
     take_away: take_away,
   });
 
-  await arrOrderDetail.forEach(async (product) => {
+  for (const product of arrOrderDetail) {
     const productExists = await Product.findByPk(product.idProduct);
 
     if (productExists) {
@@ -28,7 +28,7 @@ const create = async (arrOrderDetail, idUser, take_away) => {
         OrderId: newOrder.id,
       });
     }
-  });
+  }
 
   const order = await Order.findByPk(newOrder.id, {
     include: {
@@ -50,6 +50,19 @@ const createOrder = async (arrOrderDetail, idUser, status, take_away) => {
   const order = await create(arrOrderDetail, idUser);
 
   return order;
+};
+
+//-----------------------------------------------------------------------------------------
+
+const findAllOrders = async () => {
+  const allOrders = await Order.findAll({
+    include: {
+      model: OrderDetail,
+      include: [Product],
+    },
+  });
+
+  return allOrders;
 };
 
 //-----------------------------------------------------------------------------------------
@@ -160,4 +173,5 @@ module.exports = {
   changeStatus,
   removeOrder,
   findOrderById,
+  findAllOrders,
 };
