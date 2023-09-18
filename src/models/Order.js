@@ -12,6 +12,7 @@ module.exports = (sequelize) => {
         "Pagar",
         "En_preparacion",
         "Para_entregar",
+        "Demorado",
         "Entregado",
         "Cancelado",
         "Mercado_Pago"
@@ -28,9 +29,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
-    take_away: {   
+    take_away: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: false,}
+      defaultValue: false,
+    },
   });
 };

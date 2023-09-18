@@ -1,4 +1,3 @@
-const convertirMinutosATiempo = require("../utils/convertirMinutosATiempo");
 const { Product, ProductClass } = require("../db");
 const data = require("../data");
 
@@ -24,7 +23,7 @@ const loadingFamilyAndProduct = async () => {
         price: receta.price,
         image: receta.image,
         stock: receta.stock,
-        time: convertirMinutosATiempo(receta.time),
+        time: receta.time,
         description: receta.desc,
       });
       await newProduct.addProductClasses(productClass.id);
