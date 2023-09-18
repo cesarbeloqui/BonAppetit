@@ -37,7 +37,7 @@ module.exports = (sequelize) => {
         defaultValue: 3,
       },
       time: {
-        type: DataTypes.TIME,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       enable: {
