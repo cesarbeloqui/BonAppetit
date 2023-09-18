@@ -3,12 +3,12 @@ const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser , take_away) => {
+const create = async (arrOrderDetail, idUser, take_away) => {
   let totalPrice = 0;
 
-  await arrOrderDetail.map((product) => {
+  for (const product of arrOrderDetail) {
     totalPrice += product.price * product.amount;
-  });
+  }
 
   const newOrder = await Order.create({
     total: totalPrice,
@@ -16,7 +16,7 @@ const create = async (arrOrderDetail, idUser , take_away) => {
     take_away: take_away,
   });
 
-  await arrOrderDetail.forEach(async (product) => {
+  for (const product of arrOrderDetail) {
     const productExists = await Product.findByPk(product.idProduct);
 
     if (productExists) {
@@ -28,7 +28,7 @@ const create = async (arrOrderDetail, idUser , take_away) => {
         OrderId: newOrder.id,
       });
     }
-  });
+  }
 
   const order = await Order.findByPk(newOrder.id, {
     include: {
@@ -36,20 +36,33 @@ const create = async (arrOrderDetail, idUser , take_away) => {
       include: [Product],
     },
   });
- 
+
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status ,take_away) => {
+const createOrder = async (arrOrderDetail, idUser, status, take_away) => {
   if (status === "Mercado_Pago") {
-    const order = await create(arrOrderDetail, idUser , take_away);
-    const link = await payment(order.total , order.id);
+    const order = await create(arrOrderDetail, idUser, take_away);
+    const link = await payment(order.total, order.id);
     return { order, link };
   }
 
   const order = await create(arrOrderDetail, idUser);
 
   return order;
+};
+
+//-----------------------------------------------------------------------------------------
+
+const findAllOrders = async () => {
+  const allOrders = await Order.findAll({
+    include: {
+      model: OrderDetail,
+      include: [Product],
+    },
+  });
+
+  return allOrders;
 };
 
 //-----------------------------------------------------------------------------------------
@@ -99,18 +112,21 @@ const orderPaid = async (id) => {
     },
   });
 
-  await order.OrderDetails.forEach(async (detail) => {
+  for (const detail of order.OrderDetails) {
     await Product.decrement("stock", {
       by: detail.amount,
-      where: { id: detail.id },
+      where: { id: detail.ProductId },
     });
 
-    const product = await Product.findByPk(detail.id);
+    const product = await Product.findByPk(detail.ProductId);
 
     if (product.stock === 0) {
-      await Product.update({ enable: false }, { where: { id: detail.id } });
+      await Product.update(
+        { enable: false },
+        { where: { id: detail.ProductId } }
+      );
     }
-  });
+  }
 
   return order;
 };
@@ -157,4 +173,5 @@ module.exports = {
   changeStatus,
   removeOrder,
   findOrderById,
+  findAllOrders,
 };

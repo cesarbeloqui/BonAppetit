@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   postOrder,
-  getOrderFilters,
+  getOrders,
   updateOrderPayment,
   updateStatus,
   deleteOrder,
@@ -26,7 +26,7 @@ router.post("/", postOrder);
 
 //-----------------------------------------------------------------------------------------
 
-/*ruta para filtrar por estado de orden, por id o por estado de pago
+/*ruta que trae todas las ordenes o filtra por estado de orden, por id o por estado de pago
 
 ?status=ENUM
 El filtrado es sobre un enum, por ende estas son sus opciones:
@@ -46,7 +46,7 @@ true los que estan pagos, false los que faltan pagar
 TODOS LOS FILTROS SON COMBINABLES
 ejemplo: ?userId=1&status=En_preparacion
 */
-router.get("/", getOrderFilters);
+router.get("/", getOrders);
 
 //-----------------------------------------------------------------------------------------
 

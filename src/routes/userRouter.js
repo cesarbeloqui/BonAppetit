@@ -6,7 +6,7 @@ const getAllUsers = require("../controllers/getAllUsers");
 const changeTypeUser = require("../controllers/changeTypeUser");
 const getAllUsersAdmins = require("../controllers/getAllUsersAdmins.js");
 const getAllUsersClients = require("../controllers/getAllUsersClients.js");
-const { handlerDisableUser } = require("../handlers/handlerDisableUser");
+const {disableUser} = require("../controllers/disableUser");
 
 const userRouter = Router();
 
@@ -16,7 +16,7 @@ userRouter.get("/:id", getUserById);
 userRouter.get("/", getAllUsers);
 userRouter.post("/create", createUser);
 
-userRouter.put("/disableUser/:uid", handlerDisableUser);
+userRouter.put("/disableUser/:uid", disableUser);
 
 userRouter.put("/put", changePasswordUser);
 userRouter.post("/update", changeTypeUser);
