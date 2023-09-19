@@ -9,16 +9,16 @@ module.exports = (sequelize) => {
     },
     status: {
       type: DataTypes.ENUM(
-        "Pagar",
-        "En_preparacion",
-        "Para_entregar",
-        "Demorado",
-        "Entregado",
-        "Cancelado",
+        "pending",
+        "ongoing",
+        "ready",
+        "delivered",
+        "cancelled",
+        "delayed",
         "Mercado_Pago"
       ),
       allowNull: false,
-      defaultValue: "Pagar",
+      defaultValue: "pending",
     },
     total: {
       type: DataTypes.INTEGER,
@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
+    },
+    time: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     take_away: {
       type: DataTypes.BOOLEAN,
