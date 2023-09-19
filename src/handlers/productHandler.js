@@ -70,7 +70,7 @@ const postProduct = async (req, res) => {
     });
     const {id} = filteredClass
 
-    if (filteredProducts) {
+    if (!filteredProducts.deleted) {
       return res.status(404).json({
         error: `El producto ${name} ya existe`,
       });

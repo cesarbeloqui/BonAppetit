@@ -48,26 +48,26 @@ const createProduct = async ({
 const destroyProduct = async (id) => {
   const product = await Product.findByPk(id);
   if (!product.id) {
-    return "no hay nada para borrar";
+    return "No hay nada para borrar";
   }
   if (product.deleted) {
-    return "este producto ya estaba borrado";
+    return "Este producto ya estaba borrado";
   }
   Product.update({ deleted: true }, { where: { id: id } });
-  return "producto borrado";
+  return "Producto borrado";
 };
 
 const recoverProduct = async (id) => {
   const product = await Product.findByPk(id);
   if (!product.id) {
-    return "id de producto incorrecto";
+    return "Id de producto incorrecto";
   }
   console.log(product.deleted);
   if (product.deleted === false) {
-    return "este producto no esta borrado";
+    return "Este producto no esta borrado";
   }
   Product.update({ deleted: false }, { where: { id: id } });
-  return "producto recuperado";
+  return "Producto recuperado";
 };
 
 const updateProduct = async (id, product) => {
