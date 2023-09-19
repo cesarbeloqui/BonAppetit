@@ -100,7 +100,7 @@ const deleteOrder = async (req, res) => {
 //-----------------------------------------------------------------------------------------
 const webHookNotification = async (req, res) => {
   try {
-    await payment_notification(req);
+    await payment_notification(req,orderPaid);
     res.status(200).send("notificacion recibida");
   } catch (error) {
     res.status(500).json({ error: error.message });
