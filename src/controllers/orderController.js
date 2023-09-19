@@ -5,13 +5,19 @@ const { payment } = require("./paymentController");
 
 const create = async (arrOrderDetail, idUser, take_away , notes ) => {
   let totalPrice = 0;
+  let maxTime = 0;
 
   for (const product of arrOrderDetail) {
-    totalPrice += product.price * product.amount;
+    const productExists = await Product.findByPk(product.idProduct);
+    totalPrice += (await productExists.price) * product.amount;
+    if (productExists.time > maxTime) {
+      maxTime = await productExists.time;
+    }
   }
 
   const newOrder = await Order.create({
     total: totalPrice,
+    time: maxTime,
     UserId: idUser,
     take_away: take_away,
     notes: notes,
@@ -23,9 +29,8 @@ const create = async (arrOrderDetail, idUser, take_away , notes ) => {
     if (productExists) {
       await OrderDetail.create({
         ProductId: product.idProduct,
-        price: product.price,
+        price: productExists.price,
         amount: product.amount,
-        extras: product.extras,
         OrderId: newOrder.id,
       });
     }
