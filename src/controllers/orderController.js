@@ -103,7 +103,7 @@ const filterOrder = async (filterBy) => {
 
 const orderPaid = async (id) => {
   await Order.update(
-    { payment_status: true, status: "En_preparacion" },
+    { payment_status: true, status: "ongoing" },
     { where: { id: id } }
   );
   const order = await Order.findByPk(id, {
