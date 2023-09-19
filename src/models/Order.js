@@ -34,5 +34,8 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    notes: {
+      type: DataTypes.TEXT,
+    },
   });
 };

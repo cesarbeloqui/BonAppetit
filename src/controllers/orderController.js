@@ -3,7 +3,7 @@ const { payment } = require("./paymentController");
 
 //-----------------------------------------------------------------------------------------
 
-const create = async (arrOrderDetail, idUser, take_away) => {
+const create = async (arrOrderDetail, idUser, take_away , notes ) => {
   let totalPrice = 0;
 
   for (const product of arrOrderDetail) {
@@ -14,6 +14,7 @@ const create = async (arrOrderDetail, idUser, take_away) => {
     total: totalPrice,
     UserId: idUser,
     take_away: take_away,
+    notes: notes,
   });
 
   for (const product of arrOrderDetail) {
@@ -40,9 +41,9 @@ const create = async (arrOrderDetail, idUser, take_away) => {
   return order;
 };
 
-const createOrder = async (arrOrderDetail, idUser, status, take_away) => {
+const createOrder = async (arrOrderDetail, idUser, status, take_away , notes) => {
   if (status === "Mercado_Pago") {
-    const order = await create(arrOrderDetail, idUser, take_away);
+    const order = await create(arrOrderDetail, idUser, take_away , notes);
     const link = await payment(order.total, order.id);
     return { order, link };
   }
