@@ -1,13 +1,19 @@
-const handleVerifyEmail = require("../handlers/handleVerifyEmail");
+const handleVerifyToken = require("../handlers/handleVerifyToken");
 
-const authController = (req, res) => {
+const authController = async (req, res) => {
+  const { token } = req.params;
   try {
-    res
-      .status(200)
-      .send("Hola este va a ser el link de redireccionamiento a la app");
+    const response = await handleVerifyToken(token);
+      res.status(200).send(response);
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error.errorInfo);
+    if (error.errorInfo.code) {
+      res.status(400).send({ error: "Debe iniciar sesión de nuevo" });
+    } else {
+      res.status(500).send(error);
+    }
   }
 };
 
 module.exports = authController;
+

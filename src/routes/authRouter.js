@@ -4,6 +4,6 @@ const authController = require("../controllers/authController");
 const router = express.Router();
 
 // ruta para authenticar usuarios
-router.get("/action", authController);
+router.post("/:token", authController);
 
 module.exports = router;
