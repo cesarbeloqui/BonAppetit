@@ -29,6 +29,10 @@ module.exports = (sequelize) => {
       allowNull: false,
       defaultValue: false,
     },
+    time: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     take_away: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
