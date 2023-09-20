@@ -19,4 +19,5 @@ router.delete("/:id", deleteProductClass);
 // ruta para actualizar clase de Producto
 router.put("/:id", putProductClass);
 
+
 module.exports = router;

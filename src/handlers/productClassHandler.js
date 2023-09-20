@@ -3,6 +3,8 @@ const {
   findAllProductClasses,
   destroyProductClass,
   updateProductClass,
+  addProductClass,
+  getProductClass
 } = require("../controllers/productClassController.js");
 
 // handler que trae todos las clases de productos
@@ -19,9 +21,11 @@ const getAllProductClasses = async (req, res) => {
 const postProductClass = async (req, res) => {
   try {
     const { productClass, image } = req.body;
-    console.log(productClass, image);
-    await createProductClass(productClass, image);
-    res.status(201).send("Clase de producto creada con exito!!");
+    // console.log(productClass, image);
+    const newClass = await createProductClass(productClass, image);// Crea la nueva clase de producto como un objeto
+    addProductClass(newClass); // Agrega la nueva clase al array global
+    const updatedClasses = getProductClass(); // Devuelve el array de clases de productos actualizado
+    res.status(201).json(updatedClasses);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -49,6 +53,7 @@ const putProductClass = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
 
 module.exports = {
   getAllProductClasses,
