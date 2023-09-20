@@ -5,5 +5,6 @@ const router = express.Router();
 
 // ruta para authenticar usuarios
 router.post("/:token", authController);
+//
 
 module.exports = router;
