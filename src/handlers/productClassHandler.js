@@ -50,9 +50,23 @@ const putProductClass = async (req, res) => {
   }
 };
 
+const arrayProductClass = async (req, res) =>{
+  try {
+    const classes = await findAllProductClasses();
+    const classesInfo = classes.map((productClass) => ({
+      className: productClass.class,
+      classImage: productClass.image,
+    }));
+    res.status(200).json(classesInfo);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+}
+
 module.exports = {
   getAllProductClasses,
   postProductClass,
   deleteProductClass,
   putProductClass,
+  arrayProductClass
 };
