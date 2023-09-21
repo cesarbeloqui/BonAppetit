@@ -68,9 +68,8 @@ const postProduct = async (req, res) => {
     const filteredClass = await ProductClass.findOne({
       where: { class: productClass },
     });
-    const {id} = filteredClass
-
-    if (!filteredProducts.deleted) {
+    const { id } = filteredClass;
+    if (filteredProducts) {
       return res.status(404).json({
         error: `El producto ${name} ya existe`,
       });
@@ -90,6 +89,7 @@ const postProduct = async (req, res) => {
       res.status(201).json(newProduct);
     }
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 };
