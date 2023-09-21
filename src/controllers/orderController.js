@@ -1,5 +1,7 @@
 const { Product, OrderDetail, Order, User } = require("../db");
 const { payment } = require("./paymentController");
+const { URL_QUALIFICATION } = process.env;
+const { sendEmail } = require("../config/sendGridConfig");
 
 //-----------------------------------------------------------------------------------------
 
@@ -133,9 +135,25 @@ const orderPaid = async (id) => {
       );
     }
   }
-
+  sendMsg(order.UserId , order.id)
   return order;
 };
+
+//-----------------------------------------------------------------------------------------
+
+const sendMsg = async ( userId , orderId) => { 
+  const user = await User.findOne({ where: { id: userId } });
+  const msg = {
+    to: `${user.email}`,
+    from: `noreply.bonapptit@gmail.com`, // Use the email address or domain you verified above
+    subject: "Califica nuestro Servicio",
+    text: `Hola como estás, tenes un minuto para calificar nuestro servicio.Ingresa aqui: ${URL_QUALIFICATION}/${orderId}`
+  }
+  
+  sendEmail(msg)
+  .then( (response) => console.log (response))
+  .catch ( (error) => console.log(error))
+}
 
 //-----------------------------------------------------------------------------------------
 
