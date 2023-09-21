@@ -4,8 +4,9 @@ const {
   destroyProductClass,
   updateProductClass,
   addProductClass,
-  getProductClass
+  getProductClass,
 } = require("../controllers/productClassController.js");
+const { ProductClass } = require("../db");
 
 // handler que trae todos las clases de productos
 const getAllProductClasses = async (req, res) => {
@@ -54,10 +55,32 @@ const putProductClass = async (req, res) => {
   }
 };
 
+const postUpdateProductClass = async (req, res) =>{
+  try {
+    const { updatedArray } = req.body;
+    for (const updatedObject of updatedArray) {
+      await ProductClass.update(
+        {
+          class: updatedObject.class,
+          image: updatedObject.image,
+        },
+        {
+          where: { id: updatedObject.id },
+        }
+      );
+    }
+    let productClassArray = updatedArray;
+    res.status(200).json(productClassArray);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 
 module.exports = {
   getAllProductClasses,
   postProductClass,
   deleteProductClass,
   putProductClass,
+  postUpdateProductClass
 };
