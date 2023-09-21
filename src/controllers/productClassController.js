@@ -57,5 +57,5 @@ module.exports = {
   updateProductClass,
   addProductClass,
   getProductClass,
-  initializeProductClassesArray
+  initializeProductClassesArray, 
 };
