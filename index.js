@@ -6,7 +6,7 @@ const { ProductClass } = require("./src/db.js")
 const { initializeProductClassesArray} = require("./src/controllers/productClassController.js")
 
 // Syncing all the models at once.
-conn.sync({ force: true }).then(async () => {
+conn.sync({ alter: true }).then(async () => {
   try {
     await loadingUsersFirebase();
     console.log("Los usuarios de Firebase han sido cargados correctamente");
