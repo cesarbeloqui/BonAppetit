@@ -18,7 +18,7 @@ router.post("/", postProductClass);
 router.delete("/:id", deleteProductClass);
 
 // ruta para actualizar clase de Producto
-router.put("/post", putUpdateProductClass);
+router.put("/put", putUpdateProductClass);
 
 router.put("/:id", putProductClass);
 
