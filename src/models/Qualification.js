@@ -16,6 +16,9 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      comment: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
     },
     { timestamps: false }
   );
