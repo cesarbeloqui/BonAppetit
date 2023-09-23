@@ -5,6 +5,8 @@ const {
   destroyProduct,
   recoverProduct,
   updateProduct,
+  enableProduct,
+  disableProduct,
 } = require("../controllers/product.js");
 const { Product, ProductClass } = require("../db");
 const { Op } = require("sequelize");
@@ -111,15 +113,25 @@ const deleteProduct = async (req, res) => {
 const putProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { deleted } = req.query;
+    const { deleted, enable } = req.query;
     const product = req.body;
 
-    if (deleted === "false") {
-      const recover = await recoverProduct(id, deleted);
-      res.send(recover);
+    if (typeof enable !== "undefined") {
+      if(enable === "true"){
+        const enableProducts = await enableProduct(id, enable);
+        res.status(200).send(enableProducts);
+      }else{         
+        const disableProducts = await disableProduct(id, enable);
+        res.status(200).send(disableProducts);
+      }
     } else {
-      const update = await updateProduct(id, product);
-      res.send(update);
+      if (deleted === "false") {
+        const recover = await recoverProduct(id, deleted);
+        res.send(recover);
+      } else {
+        const update = await updateProduct(id, product);
+        res.send(update);
+      }
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
