@@ -5,7 +5,7 @@ const {
   postProductClass,
   deleteProductClass,
   putProductClass,
-  postUpdateProductClass
+  putUpdateProductClass
 } = require("../handlers/productClassHandler.js");
 
 // ruta que trae todos las clases de productos
@@ -18,9 +18,11 @@ router.post("/", postProductClass);
 router.delete("/:id", deleteProductClass);
 
 // ruta para actualizar clase de Producto
+router.put("/post", putUpdateProductClass);
+
 router.put("/:id", putProductClass);
 
-router.post("/post", postUpdateProductClass);
+
 
 
 module.exports = router;
