@@ -135,7 +135,7 @@ const orderPaid = async (id) => {
       );
     }
   }
-  sendMsg(order.UserId , order.id)
+  await sendMsg(order.UserId , order.id)
   return order;
 };
 
@@ -143,6 +143,7 @@ const orderPaid = async (id) => {
 
 const sendMsg = async ( userId , orderId) => { 
   const user = await User.findOne({ where: { id: userId } });
+  console.log(user)
   const msg = {
     to: `${user.email}`,
     from: `noreply.bonapptit@gmail.com`, // Use the email address or domain you verified above
@@ -151,7 +152,7 @@ const sendMsg = async ( userId , orderId) => {
   }
   
   sendEmail(msg)
-  .then( (response) => console.log (response))
+  .then( (response) => console.log ('mensaje enviado'))
   .catch ( (error) => console.log(error))
 }
 
