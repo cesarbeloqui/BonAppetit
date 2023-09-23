@@ -75,6 +75,23 @@ const updateProduct = async (id, product) => {
   const updateProduct = Product.findByPk(id);
   return updateProduct;
 };
+const enableProduct = async (id) => {
+  const product = await Product.findByPk(id);
+  if (!product.id) {
+    return "Id de producto incorrecto";
+  }
+  Product.update({ enable: true }, { where: { id: id } });
+  return "Producto habilitado";
+};
+
+const disableProduct = async (id) => {
+  const product = await Product.findByPk(id);
+  if (!product.id) {
+    return "Id de producto incorrecto";
+  }
+  Product.update({ enable: false }, { where: { id: id } });
+  return "Producto deshabilitado";
+};
 
 module.exports = {
   createProduct,
@@ -83,4 +100,6 @@ module.exports = {
   destroyProduct,
   updateProduct,
   recoverProduct,
+  enableProduct,
+  disableProduct,
 };
