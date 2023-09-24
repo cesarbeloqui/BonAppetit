@@ -9,6 +9,7 @@ const productRouter = require("./productRouter");
 const authRouter = require("./authRouter");
 const orderRouter = require("./orderRouter");
 const qualificationRouter = require("./qualificationRouter");
+const statisticsRouter = require("./statisticsRouter.js")
 
 const router = Router();
 
@@ -22,6 +23,7 @@ router.use("/auth", authRouter);
 router.use("/register", registerRouter);
 router.use("/order", orderRouter);
 router.use("/qualification", qualificationRouter);
+router.use("/statistics", statisticsRouter)
 
 router.use((req, res) => {
   // caso en que se ponga una url distinta a la solicitada (residual)
