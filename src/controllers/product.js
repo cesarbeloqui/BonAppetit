@@ -6,7 +6,7 @@ const findAllProduct = async () => {
     order: ["id"],
     include: {
       model: ProductClass,
-      attributes: ["class", "image"],
+      attributes: ["id", "class", "image"],
       through: {
         attributes: [],
       },

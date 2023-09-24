@@ -55,7 +55,8 @@ const putProductClass = async (req, res) => {
   }
 };
 
-const postUpdateProductClass = async (req, res) => {
+
+const putUpdateProductClass = async (req, res) =>{
   try {
     const { updatedArray } = req.body;
     for (const updatedObject of updatedArray) {
@@ -89,5 +90,5 @@ module.exports = {
   postProductClass,
   deleteProductClass,
   putProductClass,
-  postUpdateProductClass,
+  putUpdateProductClass
 };
