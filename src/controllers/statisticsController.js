@@ -8,7 +8,8 @@ const totalSale = async (since,until) => {
         createdAt: {
             [Op.between]: 
             [`${since}T00:00:00.307Z`, `${until}T23:59:59.307Z`]
-        }
+        },
+        payment_status: true
     }
   })
   return totalSale;
@@ -21,7 +22,7 @@ const totalSaleDetails = async (since,until) => {
               [Op.between]: 
               [`${since}T00:00:00.307Z`, `${until}T23:59:59.307Z`]
           },
-          status: "ongoing"
+          payment_status: true
 
         },
         include: {
@@ -53,7 +54,7 @@ const salesRanking = async (since , until) => {
                     [Op.between]: 
                     [`${since}T00:00:00.307Z`, `${until}T23:59:59.307Z`]
                 },
-                status: "ongoing"
+                payment_status: true
       
               },
             attributes: []
