@@ -24,9 +24,15 @@ const getQualification = async (req, res) => {
   const { id } = req.params;
   try {
     const comment = await qualificationComment(id);
-    res.status(200).json(comment);
+    if (comment) {
+      return res.status(200).json(comment);
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Todavia no hay reseñas sobre este producto" });
+    }
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 

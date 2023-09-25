@@ -36,8 +36,7 @@ const qualifyProduct = async (arrQualification) => {
 };
 
 const qualificationComment = async (id) => {
-  const qualification = await Qualification.findByPk(id);
-  const comment = qualification.comment;
+  const comment = await Qualification.findByPk(id);
   return comment;
 };
 
