@@ -18,6 +18,7 @@ module.exports = (sequelize) => {
       },
       comment: {
         type: DataTypes.ARRAY(DataTypes.STRING),
+        defaultValue: [],
       },
     },
     { timestamps: false }
