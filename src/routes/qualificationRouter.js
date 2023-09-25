@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const {
-    postQualification,
-    getQualification,    
+  postQualification,
+  getQualification,
 } = require("../handlers/qualificationHandler");
 
 router.post("/", postQualification);
 
-router.get("/", getQualification)
+router.get("/:id", getQualification);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const {
   qualifyProduct,
-  qualificationComment
+  qualificationComment,
 } = require("../controllers/qualificationController.js");
 
 const postQualification = async (req, res) => {
@@ -21,14 +21,13 @@ const postQualification = async (req, res) => {
 };
 
 const getQualification = async (req, res) => {
+  const { id } = req.params;
   try {
-    const {idProduct} = req.query
-    const comment = await qualificationComment(idProduct);
+    const comment = await qualificationComment(id);
     res.status(200).json(comment);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-
-module.exports = { postQualification , getQualification };
+module.exports = { postQualification, getQualification };
