@@ -1,4 +1,4 @@
-const { Product, ProductClass } = require("../db");
+const { Product, ProductClass, Qualification } = require("../db");
 
 const findAllProduct = async () => {
   const product = await Product.findAll({
@@ -39,7 +39,13 @@ const createProduct = async ({
     time,
     description,
   });
-  newProduct.addProductClasses(productClass);
+  await newProduct.addProductClasses(productClass);
+
+  await Qualification.create({
+    id: newProduct.id,
+    sum: 0,
+    amount: 0,
+  });
 
   return newProduct;
 };
