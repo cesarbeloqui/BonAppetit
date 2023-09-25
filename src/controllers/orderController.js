@@ -171,7 +171,12 @@ const changeStatus = async (id, status) => {
 //-----------------------------------------------------------------------------------------
 
 const removeOrder = async (id) => {
-  return await Order.destroy({
+  await OrderDetail.destroy({
+    where: {
+      OrderId: id,
+    },
+  });
+  await Order.destroy({
     where: {
       id: id,
     },
