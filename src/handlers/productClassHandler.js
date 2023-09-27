@@ -79,7 +79,11 @@ const putUpdateProductClass = async (req, res) =>{
     }
     
     let productClassArray = await ProductClass.findAll();
-    res.status(200).json(productClassArray);
+    const responseArray = productClassArray.map((item) => ({
+      ...item.toJSON(),
+      Products: [],
+    }));
+    res.status(200).json(responseArray);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
