@@ -9,6 +9,7 @@ const {
 const { payment } = require("./paymentController");
 const { URL_QUALIFICATION } = process.env;
 const { sendEmail } = require("../config/sendGridConfig");
+const {qualificationEmail} = require("../utils/msgHTMLEmailConfirm")
 
 //-----------------------------------------------------------------------------------------
 
@@ -191,8 +192,8 @@ const sendMsg = async (userId, orderId) => {
   const msg = {
     to: `${user.email}`,
     from: `noreply.bonapptit@gmail.com`, // Use the email address or domain you verified above
-    subject: "Califica nuestro Servicio",
-    text: `Hola como estás, tenes un minuto para calificar nuestro servicio.Ingresa aqui: ${URL_QUALIFICATION}/${orderId}`,
+    subject: "¡Queremos conocer tu opinión sobre lo que compraste!",
+    html: qualificationEmail(`${URL_QUALIFICATION}/${orderId}`, user.displayName),
   };
 
   sendEmail(msg)
