@@ -7,7 +7,7 @@ const qualifyProduct = async (arrQualification) => {
     if (exists) {
       const sum = exists.sum + qualification.points;
       const amount = exists.amount + 1;
-      const newComment =
+      const addComment =
         exists.comment === null
           ? [qualification.comment]
           : exists.comment.push(qualification.comment);
@@ -15,7 +15,7 @@ const qualifyProduct = async (arrQualification) => {
         {
           sum: sum,
           amount: amount,
-          comment: newComment,
+          comment: addComment,
         },
         { where: { id: qualification.idProduct } }
       );
