@@ -65,33 +65,25 @@ const postProduct = async (req, res) => {
       });
     }
 
-    const filteredProducts = await Product.findOne({
-      where: { name: name },
-    });
-    console.log(productClass);
     const filteredClass = await ProductClass.findOne({
       where: { id: productClass },
     });
+
     const { id } = filteredClass;
-    if (filteredProducts) {
-      return res.status(404).json({
-        error: `El producto ${name} ya existe`,
-      });
-    } else {
-      const product = {
-        name,
-        price,
-        image,
-        stock,
-        enable,
-        productClass: id,
-        description,
-        time,
-        qualification,
-      };
-      const newProduct = await createProduct(product);
-      res.status(201).json(newProduct);
-    }
+
+    const product = {
+      name,
+      price,
+      image,
+      stock,
+      enable,
+      productClass: id,
+      description,
+      time,
+      qualification,
+    };
+    const newProduct = await createProduct(product);
+    res.status(201).json(newProduct);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
@@ -119,10 +111,10 @@ const putProduct = async (req, res) => {
     const product = req.body;
 
     if (typeof enable !== "undefined") {
-      if(enable === "true"){
+      if (enable === "true") {
         const enableProducts = await enableProduct(id, enable);
         res.status(200).send(enableProducts);
-      }else{         
+      } else {
         const disableProducts = await disableProduct(id, enable);
         res.status(200).send(disableProducts);
       }     
