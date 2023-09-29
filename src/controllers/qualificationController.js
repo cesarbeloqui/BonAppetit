@@ -10,7 +10,8 @@ const qualifyProduct = async (arrQualification) => {
       const addComment =
         exists.comment === null
           ? [qualification.comment]
-          : exists.comment.push(qualification.comment);
+          : [...exists.comment, qualification.comment];
+
       await Qualification.update(
         {
           sum: sum,
