@@ -7,6 +7,7 @@ const {
   updateProduct,
   enableProduct,
   disableProduct,
+  changeProductClass
 } = require("../controllers/product.js");
 const { Product, ProductClass } = require("../db");
 const { Op } = require("sequelize");
@@ -64,32 +65,25 @@ const postProduct = async (req, res) => {
       });
     }
 
-    const filteredProducts = await Product.findOne({
-      where: { name: name },
-    });
     const filteredClass = await ProductClass.findOne({
-      where: { class: productClass },
+      where: { id: productClass },
     });
+
     const { id } = filteredClass;
-    if (filteredProducts) {
-      return res.status(404).json({
-        error: `El producto ${name} ya existe`,
-      });
-    } else {
-      const product = {
-        name,
-        price,
-        image,
-        stock,
-        enable,
-        productClass: id,
-        description,
-        time,
-        qualification,
-      };
-      const newProduct = await createProduct(product);
-      res.status(201).json(newProduct);
-    }
+
+    const product = {
+      name,
+      price,
+      image,
+      stock,
+      enable,
+      productClass: id,
+      description,
+      time,
+      qualification,
+    };
+    const newProduct = await createProduct(product);
+    res.status(201).json(newProduct);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: error.message });
@@ -111,19 +105,19 @@ const deleteProduct = async (req, res) => {
 
 // ruta para recuperar o editar producto
 const putProduct = async (req, res) => {
-  try {
+   try {
     const { id } = req.params;
     const { deleted, enable } = req.query;
     const product = req.body;
 
     if (typeof enable !== "undefined") {
-      if(enable === "true"){
+      if (enable === "true") {
         const enableProducts = await enableProduct(id, enable);
         res.status(200).send(enableProducts);
-      }else{         
+      } else {
         const disableProducts = await disableProduct(id, enable);
         res.status(200).send(disableProducts);
-      }
+      }     
     } else {
       if (deleted === "false") {
         const recover = await recoverProduct(id, deleted);
@@ -136,7 +130,7 @@ const putProduct = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+ };
 
 module.exports = {
   getAllProduct,
