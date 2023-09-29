@@ -77,6 +77,9 @@ const recoverProduct = async (id) => {
 };
 
 const updateProduct = async (id, product) => {
+  const productInDb = await Product.findByPk(id);
+  await productInDb.setProductClasses([])
+  await productInDb.addProductClasses(product.productClass)
   await Product.update(product, { where: { id: id } });
   const updateProduct = Product.findByPk(id);
   return updateProduct;
