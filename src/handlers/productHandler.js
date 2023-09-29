@@ -7,6 +7,7 @@ const {
   updateProduct,
   enableProduct,
   disableProduct,
+  changeProductClass
 } = require("../controllers/product.js");
 const { Product, ProductClass } = require("../db");
 const { Op } = require("sequelize");
@@ -65,7 +66,7 @@ const postProduct = async (req, res) => {
     }
 
     const filteredClass = await ProductClass.findOne({
-      where: { class: productClass },
+      where: { id: productClass },
     });
 
     const { id } = filteredClass;
@@ -104,7 +105,7 @@ const deleteProduct = async (req, res) => {
 
 // ruta para recuperar o editar producto
 const putProduct = async (req, res) => {
-  try {
+   try {
     const { id } = req.params;
     const { deleted, enable } = req.query;
     const product = req.body;
@@ -116,7 +117,7 @@ const putProduct = async (req, res) => {
       } else {
         const disableProducts = await disableProduct(id, enable);
         res.status(200).send(disableProducts);
-      }
+      }     
     } else {
       if (deleted === "false") {
         const recover = await recoverProduct(id, deleted);
@@ -129,7 +130,7 @@ const putProduct = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
-};
+ };
 
 module.exports = {
   getAllProduct,

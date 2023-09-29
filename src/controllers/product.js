@@ -1,4 +1,4 @@
-const { Product, ProductClass, Qualification } = require("../db");
+const { Product, ProductClass, Qualification, ProductsClasses } = require("../db");
 
 const findAllProduct = async () => {
   const product = await Product.findAll({
@@ -99,6 +99,36 @@ const disableProduct = async (id) => {
   return "Producto deshabilitado";
 };
 
+const changeProductClass = async (id, newClassId) =>{
+  const product = await Product.findByPk(id);
+  const newClass = await ProductClass.findByPk(newClassId);
+
+  if (!product || !newClass) {
+    return "Producto o clase de producto no encontrados";
+  }
+  console.log("Ejecutando la función changeProductClass");
+  // await product.setProductClasses([]);
+  // await product.addProductClass(newClass);
+  const productClasses = product.productClasses || [];
+  const newProductClass = {
+    id: newClass.id,
+    class: newClass.class,
+    image: newClass.image,
+    enable: newClass.enable,
+  };
+
+  // Agrega el nuevo objeto de clase de producto al array
+  productClasses.push(newProductClass);
+
+  // Asigna el array actualizado a la propiedad productClasses
+  product.productClasses = productClasses;
+
+  // Guarda los cambios en la base de datos
+  await product.save();
+
+  return "Clase de producto actualizada correctamente";
+}
+
 module.exports = {
   createProduct,
   findAllProduct,
@@ -108,4 +138,5 @@ module.exports = {
   recoverProduct,
   enableProduct,
   disableProduct,
+  changeProductClass
 };
