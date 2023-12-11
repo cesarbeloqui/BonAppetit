@@ -7,6 +7,8 @@ const {
   initializeProductClassesArray,
 } = require('./src/controllers/productClassController.js');
 
+const port = process.env.PORT || 8100;
+
 // Syncing all the models at once.
 conn.sync({ alter: true }).then(async () => {
   server.listen(8100, () => {
