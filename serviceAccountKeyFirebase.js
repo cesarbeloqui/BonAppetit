@@ -1,9 +1,10 @@
 require('dotenv').config();
 
+
 const serviceAccountFirebase = {
   /* process.env.REFRESH_TOKEN_EMAIL */
   type: 'service_account',
-  PROJECT_ID: process.env.PROJECT_ID_BON,
+  project_id: process.env.PROJECT_ID_BON,
   private_key_id: process.env.PRIVATE_KEY_ID,
   private_key: eval(process.env.PRIVATE_KEY),
   client_email: process.env.CLIENT_EMAIL_FIREBASE,

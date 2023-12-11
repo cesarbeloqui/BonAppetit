@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const routes = require('./routes/index.js');
 const serviceAccountFirebase = require('../serviceAccountKeyFirebase.js');
 const admin = require('firebase-admin');
-const path = require("path")
+const path = require('path');
 
 require('./db.js');
 
